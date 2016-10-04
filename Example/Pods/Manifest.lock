@@ -1,8 +1,8 @@
 PODS:
-  - QwikHttp (1.6.0):
+  - QwikHttp (1.6.11):
     - QwikJson
-  - QwikJson (1.0.2)
-  - SeaseAssist (0.0.6)
+  - QwikJson (1.0.15)
+  - SeaseAssist (0.0.23)
 
 DEPENDENCIES:
   - QwikHttp (from `../`)
@@ -13,8 +13,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  QwikHttp: a4c9d053cdbbfe66b369b0b3ceb2292661696c42
-  QwikJson: 78ca96342233f8d58ea83fbb063bb4f274cd5880
-  SeaseAssist: 8dc1e2c0c6ba2ccc5a744912e1877d77b59b0aca
+  QwikHttp: 3f7b1fbcd3c54cfcde6565877fc205d24f26f2f7
+  QwikJson: 4932a5eb39325429f1f2a3258acbceea8d300b9f
+  SeaseAssist: d0d59d6015c83be00ef2110375ecaa0c0253d190
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 84de2f2cad82a89d04dedfc49199863aebd7154f
+
+COCOAPODS: 1.0.1

@@ -7,35 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		30C1864CE81622373FB367A7 /* Pods_QwikHttp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3775E74DDE55BA75CEDEBC9E /* Pods_QwikHttp_Tests.framework */; };
+		00C4ED7B1DA2EC5D001671A8 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 00C4ED7A1DA2EC5D001671A8 /* Podfile */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		701C553A1C809CE0000F3F51 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C55391C809CE0000F3F51 /* Restaurant.swift */; };
-		70E0A0381C8F793B00FC42F5 /* ObjcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E0A0371C8F793B00FC42F5 /* ObjcViewController.m */; };
 		70E0A03C1C90AB3600FC42F5 /* QwikHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E0A03B1C90AB3600FC42F5 /* QwikHelper.swift */; };
 		70E0A03E1C90C91400FC42F5 /* QwikLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E0A03D1C90C91400FC42F5 /* QwikLoadingIndicator.swift */; };
-		73CA4DEA106A9F462659BDB1 /* Pods_QwikHttp_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E4CF43421E008BECCFF5C1 /* Pods_QwikHttp_Example.framework */; };
+		85DAAEACFF3BE7AEC40BD554 /* Pods_QwikHttp_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 599D0CA282EB63B7F24E6EC7 /* Pods_QwikHttp_Example.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = QwikHttp;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		00C4ED7A1DA2EC5D001671A8 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
 		0213528AE25BF515C5E82B0D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		024F4F4FD077A890D8452545 /* Pods-QwikHttp_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikHttp_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QwikHttp_Tests/Pods-QwikHttp_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		0E47A3F74E98A376046C15BA /* QwikHttp.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = QwikHttp.podspec; path = ../QwikHttp.podspec; sourceTree = "<group>"; };
-		3775E74DDE55BA75CEDEBC9E /* Pods_QwikHttp_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QwikHttp_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		331FA03CD14C6A1D02F6B3F0 /* Pods-QwikHttp_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikHttp_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QwikHttp_Example/Pods-QwikHttp_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		38F8C71AF943C6F499348F90 /* Pods-QwikHttp_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikHttp_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QwikHttp_Tests/Pods-QwikHttp_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		599D0CA282EB63B7F24E6EC7 /* Pods_QwikHttp_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QwikHttp_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* QwikHttp_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QwikHttp_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,20 +33,14 @@
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* QwikHttp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QwikHttp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		701C55391C809CE0000F3F51 /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		70E0A0351C8F793B00FC42F5 /* QwikHttp_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QwikHttp_Example-Bridging-Header.h"; sourceTree = "<group>"; };
-		70E0A0361C8F793B00FC42F5 /* ObjcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjcViewController.h; sourceTree = "<group>"; };
-		70E0A0371C8F793B00FC42F5 /* ObjcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcViewController.m; sourceTree = "<group>"; };
 		70E0A03B1C90AB3600FC42F5 /* QwikHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QwikHelper.swift; sourceTree = "<group>"; };
 		70E0A03D1C90C91400FC42F5 /* QwikLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QwikLoadingIndicator.swift; sourceTree = "<group>"; };
-		A3EFA19D3040F7B739CDE681 /* Pods-QwikHttp_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikHttp_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QwikHttp_Example/Pods-QwikHttp_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		8FDC974D243F158308B3E76A /* Pods-QwikHttp_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikHttp_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QwikHttp_Tests/Pods-QwikHttp_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		A4C8ED41D6C8587E19549B4A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		D131DB4DDB4C0FFDCCE79545 /* Pods-QwikHttp_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikHttp_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QwikHttp_Tests/Pods-QwikHttp_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		D5E4CF43421E008BECCFF5C1 /* Pods_QwikHttp_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QwikHttp_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DF7F826573AC221B4FE340DE /* Pods-QwikHttp_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikHttp_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-QwikHttp_Example/Pods-QwikHttp_Example.release.xcconfig"; sourceTree = "<group>"; };
+		A7F31940BAC15C40AF0EB9F4 /* Pods-QwikHttp_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikHttp_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-QwikHttp_Example/Pods-QwikHttp_Example.release.xcconfig"; sourceTree = "<group>"; };
+		BF3F462CA57B75111FFFB8AB /* Pods_QwikHttp_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QwikHttp_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,50 +48,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73CA4DEA106A9F462659BDB1 /* Pods_QwikHttp_Example.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE21AFB9204008FA782 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				30C1864CE81622373FB367A7 /* Pods_QwikHttp_Tests.framework in Frameworks */,
+				85DAAEACFF3BE7AEC40BD554 /* Pods_QwikHttp_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0FCA39CCD6126D607F148A2F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A3EFA19D3040F7B739CDE681 /* Pods-QwikHttp_Example.debug.xcconfig */,
-				DF7F826573AC221B4FE340DE /* Pods-QwikHttp_Example.release.xcconfig */,
-				024F4F4FD077A890D8452545 /* Pods-QwikHttp_Tests.debug.xcconfig */,
-				D131DB4DDB4C0FFDCCE79545 /* Pods-QwikHttp_Tests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		47BC23DA6512794526D70F88 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D5E4CF43421E008BECCFF5C1 /* Pods_QwikHttp_Example.framework */,
-				3775E74DDE55BA75CEDEBC9E /* Pods_QwikHttp_Tests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for QwikHttp */,
-				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				0FCA39CCD6126D607F148A2F /* Pods */,
-				47BC23DA6512794526D70F88 /* Frameworks */,
+				E084BE878E6D390EE2E33384 /* Pods */,
+				95F85533943624F4C4DE9402 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,7 +70,6 @@
 			isa = PBXGroup;
 			children = (
 				607FACD01AFB9204008FA782 /* QwikHttp_Example.app */,
-				607FACE51AFB9204008FA782 /* QwikHttp_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -126,8 +80,6 @@
 				701C552F1C809C23000F3F51 /* Model */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				70E0A0361C8F793B00FC42F5 /* ObjcViewController.h */,
-				70E0A0371C8F793B00FC42F5 /* ObjcViewController.m */,
 				70E0A03D1C90C91400FC42F5 /* QwikLoadingIndicator.swift */,
 				70E0A03B1C90AB3600FC42F5 /* QwikHelper.swift */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -139,28 +91,12 @@
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				00C4ED7A1DA2EC5D001671A8 /* Podfile */,
 				70E0A0351C8F793B00FC42F5 /* QwikHttp_Example-Bridging-Header.h */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		607FACE81AFB9204008FA782 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
-				607FACE91AFB9204008FA782 /* Supporting Files */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		607FACE91AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEA1AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -183,6 +119,26 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		95F85533943624F4C4DE9402 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				599D0CA282EB63B7F24E6EC7 /* Pods_QwikHttp_Example.framework */,
+				BF3F462CA57B75111FFFB8AB /* Pods_QwikHttp_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E084BE878E6D390EE2E33384 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				331FA03CD14C6A1D02F6B3F0 /* Pods-QwikHttp_Example.debug.xcconfig */,
+				A7F31940BAC15C40AF0EB9F4 /* Pods-QwikHttp_Example.release.xcconfig */,
+				8FDC974D243F158308B3E76A /* Pods-QwikHttp_Tests.debug.xcconfig */,
+				38F8C71AF943C6F499348F90 /* Pods-QwikHttp_Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -190,12 +146,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "QwikHttp_Example" */;
 			buildPhases = (
-				5E70D2C94B5B13D428A1EDC4 /* Check Pods Manifest.lock */,
+				80AC5C97257ED68F41049D6C /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				83D1480123EA6C08BEDC9E92 /* Embed Pods Frameworks */,
-				77D4656BBC5D2B427C261709 /* Copy Pods Resources */,
+				F21B65E3B440EA6A4B098387 /* [CP] Embed Pods Frameworks */,
+				AF6E6D4F2FC5F54DD5718E77 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -206,27 +162,6 @@
 			productReference = 607FACD01AFB9204008FA782 /* QwikHttp_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* QwikHttp_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "QwikHttp_Tests" */;
-			buildPhases = (
-				9C27F50D0CFC4FA8DF5F116B /* Check Pods Manifest.lock */,
-				607FACE11AFB9204008FA782 /* Sources */,
-				607FACE21AFB9204008FA782 /* Frameworks */,
-				607FACE31AFB9204008FA782 /* Resources */,
-				66368B7A4E3DAB9F68E510B7 /* Embed Pods Frameworks */,
-				75A5F210BE3B9F69E362E69E /* Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
-			);
-			name = QwikHttp_Tests;
-			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* QwikHttp_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -234,15 +169,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-					};
-					607FACE41AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = 607FACCF1AFB9204008FA782;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -260,7 +192,6 @@
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* QwikHttp_Example */,
-				607FACE41AFB9204008FA782 /* QwikHttp_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -272,28 +203,22 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				00C4ED7B1DA2EC5D001671A8 /* Podfile in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE31AFB9204008FA782 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5E70D2C94B5B13D428A1EDC4 /* Check Pods Manifest.lock */ = {
+		80AC5C97257ED68F41049D6C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,44 +226,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		66368B7A4E3DAB9F68E510B7 /* Embed Pods Frameworks */ = {
+		AF6E6D4F2FC5F54DD5718E77 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikHttp_Tests/Pods-QwikHttp_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		75A5F210BE3B9F69E362E69E /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikHttp_Tests/Pods-QwikHttp_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		77D4656BBC5D2B427C261709 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,34 +241,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikHttp_Example/Pods-QwikHttp_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		83D1480123EA6C08BEDC9E92 /* Embed Pods Frameworks */ = {
+		F21B65E3B440EA6A4B098387 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikHttp_Example/Pods-QwikHttp_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9C27F50D0CFC4FA8DF5F116B /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -384,7 +264,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				70E0A03C1C90AB3600FC42F5 /* QwikHelper.swift in Sources */,
-				70E0A0381C8F793B00FC42F5 /* ObjcViewController.m in Sources */,
 				70E0A03E1C90C91400FC42F5 /* QwikLoadingIndicator.swift in Sources */,
 				701C553A1C809CE0000F3F51 /* Restaurant.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
@@ -392,23 +271,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		607FACE11AFB9204008FA782 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* QwikHttp_Example */;
-			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
@@ -443,8 +306,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -472,6 +337,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -488,8 +354,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -508,14 +376,17 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3EFA19D3040F7B739CDE681 /* Pods-QwikHttp_Example.debug.xcconfig */;
+			baseConfigurationReference = 331FA03CD14C6A1D02F6B3F0 /* Pods-QwikHttp_Example.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = QwikHttp/Info.plist;
@@ -525,13 +396,15 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "QwikHttp/QwikHttp_Example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DF7F826573AC221B4FE340DE /* Pods-QwikHttp_Example.release.xcconfig */;
+			baseConfigurationReference = A7F31940BAC15C40AF0EB9F4 /* Pods-QwikHttp_Example.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = QwikHttp/Info.plist;
@@ -540,44 +413,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "QwikHttp/QwikHttp_Example-Bridging-Header.h";
-			};
-			name = Release;
-		};
-		607FACF31AFB9204008FA782 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 024F4F4FD077A890D8452545 /* Pods-QwikHttp_Tests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QwikHttp_Example.app/QwikHttp_Example";
-			};
-			name = Debug;
-		};
-		607FACF41AFB9204008FA782 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D131DB4DDB4C0FFDCCE79545 /* Pods-QwikHttp_Tests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QwikHttp_Example.app/QwikHttp_Example";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -598,15 +434,6 @@
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
 				607FACF11AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "QwikHttp_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				607FACF31AFB9204008FA782 /* Debug */,
-				607FACF41AFB9204008FA782 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

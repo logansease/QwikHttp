@@ -34,17 +34,17 @@
 
 -(IBAction)sendRequest:(id)sender
 {
-    [[[[QwikHttpObjc alloc]init:@"http://resttest2016.herokuapp.com/restaurants" httpMethod:HttpRequestMethodGet] addUrlParams:@{@"format" : @"json"}]getArrayResponse:^(NSArray * data, NSError * error, QwikHttpObjc * request) {
-        
-        //get the string response and parse it into a result array using QwikJson.
-        //note that this time we used the array handler to get the results as an array of dictionaries rather
-        //than needing to parse the string to a json array first.
-        if(data)
-        {
-            NSArray * restaurants = [Restaurant arrayForJsonArray:data ofClass:[Restaurant class]];
-            [UIAlertController showAlertWithTitle:@"Success" andMessage:[NSString stringWithFormat:@"Got %li",(long)restaurants.count] from:self];
-        }
-    }];
+//    [[[[QwikHttpObjc alloc]init:@"http://resttest2016.herokuapp.com/restaurants" httpMethod:HttpRequestMethodGet] addUrlParams:@{@"format" : @"json"}]getArrayResponse:^(NSArray * data, NSError * error, QwikHttpObjc * request) {
+//        
+//        //get the string response and parse it into a result array using QwikJson.
+//        //note that this time we used the array handler to get the results as an array of dictionaries rather
+//        //than needing to parse the string to a json array first.
+//        if(data)
+//        {
+//            NSArray * restaurants = [Restaurant arrayForJsonArray:data ofClass:[Restaurant class]];
+//            [UIAlertController showAlertWithTitle:@"Success" andMessage:[NSString stringWithFormat:@"Got %li",(long)restaurants.count] from:self];
+//        }
+//    }];
 }
 
 @end

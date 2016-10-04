@@ -23,8 +23,28 @@
         
         self.picker.delegate = self;
         self.picker.dataSource = self;
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didStartEditing:) name:UITextFieldTextDidBeginEditingNotification object:self];
     }
     return self;
+}
+
+-(void)didStartEditing:(NSNotification *) notification
+{
+    if(self.currentValue.length > 0)
+    {
+        NSInteger index = [self.values indexOfObject:self.currentValue];
+        if(index != NSNotFound)
+        {
+            [self.picker selectRow:index inComponent:0 animated:YES];
+        }
+        self.text = self.currentValue;
+    }
+    else
+    {
+        self.text = self.values.firstObject;
+    }
+    [self.valueDelegate valuePickerTextField:self changed:self.currentIndex withValue:self.currentValue];
 }
 
 #pragma mark range picker methods
@@ -56,12 +76,16 @@
     {
         self.currentIndex = row;
         self.currentValue = self.values[row];
+        self.text = self.currentValue;
         
         [self.valueDelegate valuePickerTextField:self changed:self.currentIndex withValue:self.currentValue];
-        
-        self.text = self.currentValue;
     }
 
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 

@@ -10,7 +10,8 @@ What separates QwikHttp from other Networking Libraries is its:
 - simple, yet robust loading indicator support
 - response interceptors to provide a method to handle unauthorized responses and token refreshing with ease.
 
-QwikHttp is written in Swift but works (without generics) great with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
+QwikHttp is written in Swift 3 but works (without generics) great with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
+    For a Swift 2 and objective-c compatible version, please see version 1.6.11
 
 ## Usage
 
@@ -19,7 +20,7 @@ Here are some example of how easy it is to use QwikHttp.
 ###A simple request
 
 ```swift
-    QwikHttp("http://api.com", httpMethod: .Get).send()
+    QwikHttp("http://api.com", httpMethod: .get).send()
 ```
 
 ###Parameters and Headers
@@ -29,20 +30,20 @@ You can set json, url or form encoded parameters
     let params = ["awesome" : "true"]
 
     //url parameters
-    QwikHttp("http://api.com", httpMethod: .Get).addUrlParameters(params).send()
+    QwikHttp("http://api.com", httpMethod: .get).addUrlParameters(params).send()
 
     //form parameters
-    QwikHttp("http://api.com", httpMethod: .Get).addParameters(params).setParameterType(.urlEncoded).send()
+    QwikHttp("http://api.com", httpMethod: .get).addParameters(params).setParameterType(.urlEncoded).send()
 
     //json parameters
-    QwikHttp("http://api.com", httpMethod: .Get).addParameters(params).setParameterType(.json).send()
+    QwikHttp("http://api.com", httpMethod: .get).addParameters(params).setParameterType(.json).send()
 ```
 
 You can set the body directly and add your own headers
 ```swift
     let data =  UIImagePNGRepresentation(someImage);
     let headers = ["Content-Type": "image/png"]
-    QwikHttp("http://api.com", httpMethod: .Post).setBody(data).addHeaders(headers).send()
+    QwikHttp("http://api.com", httpMethod: .post).setBody(data).addHeaders(headers).send()
 ```
 
 ###Generic
@@ -64,7 +65,7 @@ Depending on your needs, you may wish to call the objectHandler if you are expec
 
 #### Get Object
 ```swift
-        QwikHttp(url: "http://api.com", httpMethod: .Get).getResponse(NSDictionary.self,  { (result, error, request) -> Void in
+        QwikHttp(url: "http://api.com", httpMethod: .get).getResponse(NSDictionary.self,  { (result, error, request) -> Void in
             if let resultDictionary = result
             {
                 //have fun with your JSON Parsed into a dictionary!
@@ -77,7 +78,7 @@ Depending on your needs, you may wish to call the objectHandler if you are expec
 ```
 #### Get Array
 ```swift
-        QwikHttp("http://api.com", httpMethod: .Get).getResponseArray(NSDictionary.self, { (result, error, request) -> Void in
+        QwikHttp("http://api.com", httpMethod: .get).getResponseArray(NSDictionary.self, { (result, error, request) -> Void in
             if let resultArray = result
             {
                 //have fun with your JSON Parsed into an array of dictionaries
@@ -92,7 +93,7 @@ Depending on your needs, you may wish to call the objectHandler if you are expec
 
 You may also use a simple Yes/No success response handler.
 ```swift
-QwikHttp("http://api.com", httpMethod: .Get)
+QwikHttp("http://api.com", httpMethod: .get)
     .send { (success) -> Void in
         //if success do x
     }
@@ -102,7 +103,7 @@ QwikHttp("http://api.com", httpMethod: .Get)
 
 Response objects are saved in the request object and available to use for more low level handling.
 ```swift
-QwikHttp("http://api.com", httpMethod: .Get).getResponse(NSString.self,  { (result, error, request) -> Void in
+QwikHttp("http://api.com", httpMethod: .get).getResponse(NSString.self,  { (result, error, request) -> Void in
     if let responseCode = request.response.responseCode
     {
         //check for 403 responses or whatever
@@ -174,7 +175,7 @@ By using the QwikHttpLoadingIndicatorDelegate protocol, you can provide an inter
 Once the default indicator delegate is set to QwikHttpConfig, Simply call the setLoadingTitle Method on your QwikHttp object and an indicator will automatically show when your request is running and hide when it completes
 
 ```swift
-QwikHttp("http://api.com", httpMethod: .Get).setLoadingTitle("Loading").send()
+QwikHttp("http://api.com", httpMethod: .get).setLoadingTitle("Loading").send()
 ```
 
 You can set the default title for the loading indicator, passing a nil title will keep it hidden (this is the default behavior), passing a string, even an empty one will make your indicator show and hide automatically by default
@@ -264,7 +265,7 @@ since QwikHttp is an object, you can hold on to it, pass it around and run it ag
 ```swift
     func setup()
     {
-        let self.qwikHttp = QwikHttp("http://api.com", httpMethod: .Get)
+        let self.qwikHttp = QwikHttp("http://api.com", httpMethod: .get)
         run(self.qwikHttp)
         
         //run it again after some delay
@@ -281,7 +282,7 @@ since QwikHttp is an object, you can hold on to it, pass it around and run it ag
 ```
 This also means that if you don't want to use the inline, builder style syntax, you don't have to!
 ```swift
-    let self.qwikHttp = QwikHttp("http://api.com", httpMethod: .Get)
+    let self.qwikHttp = QwikHttp("http://api.com", httpMethod: .get)
     self.qwikHttp.addParams([:])
     self.qwikHttp.addHeaders([:])
     self.qwikHttp.run()
@@ -310,6 +311,8 @@ QwikHttpConfig.setDefaultResponseThread(.Background)
 ```
 
 ## Objective C
+###NOTE: Objective-C support is currently not working as of Swift 3.0 changes
+
 QwikHttp is compatible with objective-c by importing its objective-c class file. The objective c version of QwikHttp supports most of what the Swift version supports, except for Generics.
 Instead of using generic type handlers, you may use the boolean handler or a string, data, dictionary or array (of dictionaries) handler and then utilize QwikJson to deserialize your objects if necessary.
 
