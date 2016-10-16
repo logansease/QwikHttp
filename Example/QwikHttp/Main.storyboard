@@ -51,10 +51,10 @@
             </objects>
             <point key="canvasLocation" x="-15" y="476"/>
         </scene>
-        <!--View Controller-->
+        <!--Objc View Controller-->
         <scene sceneID="GL9-Xk-TAq">
             <objects>
-                <viewController id="I1M-Ep-ZgQ" customClass="ViewController" customModule="QwikHttp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="I1M-Ep-ZgQ" customClass="ObjcViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i5u-zx-0de"/>
                         <viewControllerLayoutGuide type="bottom" id="4nz-mh-Ftt"/>

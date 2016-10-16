@@ -20,7 +20,7 @@ Here are some example of how easy it is to use QwikHttp.
 ###A simple request
 
 ```swift
-QwikHttp("http://api.com", httpMethod: .get).send()
+QwikHttp("https://api.com", httpMethod: .get).send()
 ```
 
 ###Parameters and Headers
@@ -30,20 +30,20 @@ You can set json, url or form encoded parameters
 let params = ["awesome" : "true"]
 
 //url parameters
-QwikHttp("http://api.com", httpMethod: .get).addUrlParameters(params).send()
+QwikHttp("https://api.com", httpMethod: .get).addUrlParameters(params).send()
 
 //form parameters
-QwikHttp("http://api.com", httpMethod: .get).addParameters(params).setParameterType(.urlEncoded).send()
+QwikHttp("https://api.com", httpMethod: .get).addParameters(params).setParameterType(.urlEncoded).send()
 
 //json parameters
-QwikHttp("http://api.com", httpMethod: .get).addParameters(params).setParameterType(.json).send()
+QwikHttp("https://api.com", httpMethod: .get).addParameters(params).setParameterType(.json).send()
 ```
 
 You can set the body directly and add your own headers
 ```swift
 let data =  UIImagePNGRepresentation(someImage);
 let headers = ["Content-Type": "image/png"]
-QwikHttp("http://api.com", httpMethod: .post).setBody(data).addHeaders(headers).send()
+QwikHttp("https://api.com", httpMethod: .post).setBody(data).addHeaders(headers).send()
 ```
 
 ###Generic
@@ -65,7 +65,7 @@ Depending on your needs, you may wish to call the objectHandler if you are expec
 
 #### Get Object
 ```swift
-QwikHttp(url: "http://api.com", httpMethod: .get).getResponse(NSDictionary.self,  { (result, error, request) -> Void in
+QwikHttp(url: "https://api.com", httpMethod: .get).getResponse(NSDictionary.self,  { (result, error, request) -> Void in
 if let resultDictionary = result
 {
 //have fun with your JSON Parsed into a dictionary!
@@ -78,7 +78,7 @@ else if let resultError = error
 ```
 #### Get Array
 ```swift
-QwikHttp("http://api.com", httpMethod: .get).getResponseArray(NSDictionary.self, { (result, error, request) -> Void in
+QwikHttp("https://api.com", httpMethod: .get).getResponseArray(NSDictionary.self, { (result, error, request) -> Void in
 if let resultArray = result
 {
 //have fun with your JSON Parsed into an array of dictionaries
@@ -93,7 +93,7 @@ else if let resultError = error
 
 You may also use a simple Yes/No success response handler.
 ```swift
-QwikHttp("http://api.com", httpMethod: .get)
+QwikHttp("https://api.com", httpMethod: .get)
 .send { (success) -> Void in
 //if success do x
 }
@@ -103,7 +103,7 @@ QwikHttp("http://api.com", httpMethod: .get)
 
 Response objects are saved in the request object and available to use for more low level handling.
 ```swift
-QwikHttp("http://api.com", httpMethod: .get).getResponse(NSString.self,  { (result, error, request) -> Void in
+QwikHttp("https://api.com", httpMethod: .get).getResponse(NSString.self,  { (result, error, request) -> Void in
 if let responseCode = request.response.responseCode
 {
 //check for 403 responses or whatever
@@ -147,7 +147,7 @@ Now you can pass and return QwikJson Objects to and from your RESTful API with e
 ```swift
 let model = MyModel()
 
-QwikHttp("http://api.com", httpMethod: .post).setObject(model).getResponse(MyModel.self,  { (result, error, request) -> Void in
+QwikHttp("https://api.com", httpMethod: .post).setObject(model).getResponse(MyModel.self,  { (result, error, request) -> Void in
 if let result as? Model
 {
 //you got a model back, with no parsing code!
@@ -160,7 +160,7 @@ It even works with arrays
 let model = MyModel()
 let models = [model]
 
-QwikHttp("http://api.com", httpMethod: .post).setObjects(models).getArrayResponse(MyModel.self, { (results, error, request) -> Void in
+QwikHttp("https://api.com", httpMethod: .post).setObjects(models).getArrayResponse(MyModel.self, { (results, error, request) -> Void in
 if let modelArray = results as? [Model]
 {
 //you got an array of models back, with no parsing code!
@@ -175,7 +175,7 @@ By using the QwikHttpLoadingIndicatorDelegate protocol, you can provide an inter
 Once the default indicator delegate is set to QwikHttpConfig, Simply call the setLoadingTitle Method on your QwikHttp object and an indicator will automatically show when your request is running and hide when it completes
 
 ```swift
-QwikHttp("http://api.com", httpMethod: .get).setLoadingTitle("Loading").send()
+QwikHttp("https://api.com", httpMethod: .get).setLoadingTitle("Loading").send()
 ```
 
 You can set the default title for the loading indicator, passing a nil title will keep it hidden (this is the default behavior), passing a string, even an empty one will make your indicator show and hide automatically by default
@@ -265,7 +265,7 @@ since QwikHttp is an object, you can hold on to it, pass it around and run it ag
 ```swift
 func setup()
 {
-let self.qwikHttp = QwikHttp("http://api.com", httpMethod: .get)
+let self.qwikHttp = QwikHttp("https://api.com", httpMethod: .get)
 run(self.qwikHttp)
 
 //run it again after some delay
@@ -282,7 +282,7 @@ qwikHttp.run()
 ```
 This also means that if you don't want to use the inline, builder style syntax, you don't have to!
 ```swift
-let self.qwikHttp = QwikHttp("http://api.com", httpMethod: .get)
+let self.qwikHttp = QwikHttp("https://api.com", httpMethod: .get)
 self.qwikHttp.addParams([:])
 self.qwikHttp.addHeaders([:])
 self.qwikHttp.run()
@@ -311,7 +311,6 @@ QwikHttpConfig.setDefaultResponseThread(.Background)
 ```
 
 ## Objective C
-###NOTE: Objective-C support is currently not working as of Swift 3.0 changes
 
 QwikHttp is compatible with objective-c by importing its objective-c class file. The objective c version of QwikHttp supports most of what the Swift version supports, except for Generics.
 Instead of using generic type handlers, you may use the boolean handler or a string, data, dictionary or array (of dictionaries) handler and then utilize QwikJson to deserialize your objects if necessary.
@@ -323,9 +322,9 @@ Instead of using generic type handlers, you may use the boolean handler or a str
 
 -(IBAction)sendRequest:(id)sender
 {
-[[[[QwikHttpObjc alloc]init:@"http://resttest2016.herokuapp.com/restaurants" httpMethod:HttpRequestMethodGet] 
+[[[[QwikHttp alloc]init:@"https://resttest2016.herokuapp.com/restaurants" httpMethod:HttpRequestMethodGet] 
 addUrlParams:@{@"format" : @"json"}]
-getArrayResponse:^(NSArray * results, NSError * error, QwikHttpObjc * request) {
+getArrayResponse:^(NSArray * results, NSError * error, QwikHttp * request) {
 
 if(results)
 {
@@ -340,7 +339,7 @@ NSArray * restaurants = [Restaurant arrayForJsonArray:data ofClass:[Restaurant c
 ## Installation
 
 ###Pods
-QwikHttp is available through [CocoaPods](http://cocoapods.org). To install
+QwikHttp is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
