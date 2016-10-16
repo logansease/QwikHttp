@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'QwikHttp_Example' do
+  pod 'QwikHttp', :path => '../'
+
+  target 'QwikHttp_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
