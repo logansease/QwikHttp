@@ -10,7 +10,6 @@
 
 import Foundation
 import QwikHttp
-//import SwiftSpinner
 
 @objc open class QwikHelper : NSObject,  QwikHttpLoadingIndicatorDelegate, QwikHttpResponseInterceptor, QwikHttpRequestInterceptor
 {
@@ -42,11 +41,11 @@ import QwikHttp
     //show and hide indicators using swift spinner
     @objc open func showIndicator(_ title: String!)
     {
-//        SwiftSpinner.show(title)
+        QwikLoadingIndicator.shared().show(withTitle: title)
     }
     @objc open func hideIndicator()
     {
-//        SwiftSpinner.hide()
+        QwikLoadingIndicator.shared().hide()
     }
     
     public func shouldInterceptRequest(_ request: QwikHttp!) -> Bool

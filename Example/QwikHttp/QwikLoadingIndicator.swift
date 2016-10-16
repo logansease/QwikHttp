@@ -24,7 +24,7 @@ open class QwikLoadingIndicator : NSObject
         return Singleton.instance
     }
     
-    open func showWithTitle(_ title: String?)
+    open func show(withTitle title: String?)
     {
         //TODO, add a label.
         if let oldIndicator = self.indicator

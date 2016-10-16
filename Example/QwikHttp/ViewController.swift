@@ -56,7 +56,7 @@ class ViewController: UIViewController {
             r.name = String(format: "Rest Test %i", arc4random() % 1000)
             
             //create a new restaurant
-            QwikHttp("http://resttest2016.herokuapp.com/restaurants", httpMethod: .post).setLoadingTitle("Creating").setObject(r).addUrlParams(["format" : "json"]).getResponse(Restaurant.self, { (results, error, request) -> Void in
+            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .post).setLoadingTitle("Creating").setObject(r).addUrlParams(["format" : "json"]).getResponse(Restaurant.self, { (results, error, request) -> Void in
                 
                 //get the restaurant from the response
                 if let restaurant = results, let name = restaurant.name
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
         else if (i == 2)
         {
             //get an array of restaurants
-            QwikHttp("http://resttest2016.herokuapp.com/restaurants", httpMethod: .get).addUrlParams(["format" : "json"]).getArrayResponse(Restaurant.self, { (results, error, request) -> Void in
+            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .get).addUrlParams(["format" : "json"]).getArrayResponse(Restaurant.self, { (results, error, request) -> Void in
                 
                 //display the restaurant count
                 if let resultsArray = results
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         {
             //call a get with a specific restaurant. This is an example of the basic boolean result handler
             //no response info is available, but you can quickly determine if the response was successful or not.
-            QwikHttp("http://resttest2016.herokuapp.com/restaurants/1", httpMethod: .get).addUrlParams(["format" : "json"]).send({ (success) -> Void in
+            QwikHttp("https://resttest2016.herokuapp.com/restaurants/1", httpMethod: .get).addUrlParams(["format" : "json"]).send({ (success) -> Void in
                 
                 if success
                 {

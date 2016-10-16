@@ -226,8 +226,8 @@ open class QwikHttp : NSObject {
     {
         if let qwikJson = object,  let params = qwikJson.toDictionary() as? [String : AnyObject]
         {
-            self.addParams(params)
-            self.setParameterType(.json)
+            _ = self.addParams(params)
+            _ = self.setParameterType(.json)
         }
         return self
     }
@@ -239,8 +239,8 @@ open class QwikHttp : NSObject {
         {
             do{
                 let data = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-                self.setBody(data)
-                self.addHeader("Content-Type", value: "application/json")
+                _ = self.setBody(data)
+                _ = self.addHeader("Content-Type", value: "application/json")
             }
             catch _ as NSError {}
         }
@@ -527,7 +527,7 @@ private class HttpRequestPooler
                 //if we couldn't encode the values, then perhaps json was passed in unexpectedly, so try to parse it as json.
             else
             {
-                requestParams.setParameterType(.json)
+                _ = requestParams.setParameterType(.json)
             }
         }
         
