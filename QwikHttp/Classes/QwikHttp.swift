@@ -530,7 +530,7 @@ extension QwikHttp
         }
     }
     
-    @objc open func getArrayResponse(_ handler :  @escaping ([NSDictionary]?, NSError?, QwikHttp?) -> Void)
+    @objc open func getArrayOfDictionariesResponse(_ handler :  @escaping ([NSDictionary]?, NSError?, QwikHttp?) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
