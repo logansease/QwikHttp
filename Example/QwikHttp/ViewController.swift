@@ -35,6 +35,8 @@ class ViewController: UIViewController {
             //call a get to the itunes search api and find our top overall paid apps on the US Store.
             QwikHttp(url: "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/sf=143441/limit=10/json", httpMethod: HttpRequestMethod.get).getResponse(NSDictionary.self,  { (result, error, request) -> Void in
                 
+                request.printDebugInfo(excludeResponse: true)
+                
                 //parse our feed object from the response
                 if let dict = result, let feed = dict["feed"] as? NSDictionary, let entries = feed["entry"] as? NSArray
                 {

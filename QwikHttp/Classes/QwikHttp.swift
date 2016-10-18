@@ -9,11 +9,11 @@
 import Foundation
 import QwikJson
 
-public typealias BooleanCompletionHandler = (_ success: Bool) -> Void
+public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 
 /****** REQUEST TYPES *******/
 @objc public enum HttpRequestMethod : Int {
-    case get = 0, post, put, delete
+    case get = 0, post, put, delete, patch
 }
 
 //parameter types
@@ -307,7 +307,7 @@ public typealias BooleanCompletionHandler = (_ success: Bool) -> Void
     /********* RESPONSE HANDLERS / SENDING METHODS *************/
     
     //get an an object of a generic type back
-    open func getResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping (T?, NSError?, QwikHttp?) -> Void)
+    open func getResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping (T?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -340,7 +340,7 @@ public typealias BooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //get an array of a generic type back
-    open func getArrayResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping ([T]?, NSError?, QwikHttp?) -> Void)
+    open func getArrayResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping ([T]?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -372,7 +372,7 @@ public typealias BooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //Send the request with a simple boolean handler, which is optional
-    @objc open func send( _ handler: BooleanCompletionHandler? = nil)
+    @objc open func send( _ handler: QBooleanCompletionHandler? = nil)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -482,11 +482,36 @@ public typealias BooleanCompletionHandler = (_ success: Bool) -> Void
             code()
         }
     }
+    
+    @objc open func printDebugInfo(excludeResponse excludeResponse : Bool = false)
+    {
+        NSLog("%@ to %@", HttpRequestPooler.paramTypeToString(self.httpMethod), self.urlString)
+        NSLog("HEADERS:")
+        for (key, value) in self.headers
+        {
+            NSLog("%@: %@", key, value)
+        }
+        
+        NSLog("BODY:")
+        if let body = self.getBody()
+        {
+            NSLog("%@", body)
+        }
+        
+        if excludeResponse == false
+        {
+            NSLog("RESPONSE:")
+            if let responseData = self.responseData, let responseString = String(data: responseData, encoding: .utf8)
+            {
+                NSLog("%@", responseString)
+            }
+        }
+    }
 }
 
 extension QwikHttp
 {
-    @objc open func getStringResponse(_ handler :  @escaping (String?, NSError?, QwikHttp?) -> Void)
+    @objc open func getStringResponse(_ handler :  @escaping (String?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -508,7 +533,7 @@ extension QwikHttp
         }
     }
     
-    @objc open func getDataResponse(_ handler :  @escaping (Data?, NSError?, QwikHttp?) -> Void)
+    @objc open func getDataResponse(_ handler :  @escaping (Data?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -518,7 +543,7 @@ extension QwikHttp
         }
     }
     
-    @objc open func getDictionaryResponse(_ handler :  @escaping (NSDictionary?, NSError?, QwikHttp?) -> Void)
+    @objc open func getDictionaryResponse(_ handler :  @escaping (NSDictionary?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -540,7 +565,7 @@ extension QwikHttp
         }
     }
     
-    @objc open func getArrayOfDictionariesResponse(_ handler :  @escaping ([NSDictionary]?, NSError?, QwikHttp?) -> Void)
+    @objc open func getArrayOfDictionariesResponse(_ handler :  @escaping ([NSDictionary]?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -606,7 +631,7 @@ private class HttpRequestPooler
                 request.httpBody = QwikHttp.paramStringFrom(params).data(using: String.Encoding.utf8)
                 
                 //set our body so we can view it later for debug purposes
-                requestParams.setBody(request.httpBody)
+                _ = requestParams.setBody(request.httpBody)
                 
                 //set the request type headers
                 //application/x-www-form-urlencoded
@@ -629,7 +654,7 @@ private class HttpRequestPooler
                 request.httpBody = data
                 
                 //set our body so we can view it later for debug purposes
-                requestParams.setBody(request.httpBody)
+                _ = requestParams.setBody(request.httpBody)
             }
             catch let JSONError as NSError {
                 handler(nil,nil,JSONError)
@@ -702,7 +727,7 @@ private class HttpRequestPooler
     }
     
     //convert our enum to a string used for the request
-    fileprivate class func paramTypeToString(_ type: HttpRequestMethod) -> String!
+    open class func paramTypeToString(_ type: HttpRequestMethod) -> String!
     {
         switch(type)
         {
@@ -714,6 +739,8 @@ private class HttpRequestPooler
             return "GET"
         case HttpRequestMethod.delete:
             return "DELETE"
+        case HttpRequestMethod.patch:
+            return "PATCH"
         }
     }
     
