@@ -483,7 +483,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         }
     }
     
-    @objc open func printDebugInfo(excludeResponse excludeResponse : Bool = false)
+    @objc open func printDebugInfo(excludeResponse : Bool = false)
     {
         NSLog("%@ to %@", HttpRequestPooler.paramTypeToString(self.httpMethod), self.urlString)
         NSLog("HEADERS:")
