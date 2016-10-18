@@ -268,6 +268,16 @@ public typealias BooleanCompletionHandler = (_ success: Bool) -> Void
         return self;
     }
     
+    //get the body as a string for debugging purposes, very useful for displaying the json after the request is sent
+    @objc open func getBody() -> String?
+    {
+        guard let data = self.body else
+        {
+            return nil
+        }
+        return String(data: data, encoding: .utf8)
+    }
+    
     //set the parameter type
     @objc open func setParameterType(_ parameterType : ParameterType) -> QwikHttp
     {
@@ -588,16 +598,15 @@ private class HttpRequestPooler
         }
         
         //set up our parameters
-        if let body = requestParams.body
-        {
-            request.httpBody = body
-        }
-        else if requestParams.parameterType == .formEncoded  && requestParams.params.count > 0
+        if requestParams.parameterType == .formEncoded  && requestParams.params.count > 0
         {
             //convert parameters to form encoded values and set to body
             if let params = requestParams.params as? [String : String]
             {
                 request.httpBody = QwikHttp.paramStringFrom(params).data(using: String.Encoding.utf8)
+                
+                //set our body so we can view it later for debug purposes
+                requestParams.setBody(request.httpBody)
                 
                 //set the request type headers
                 //application/x-www-form-urlencoded
@@ -612,12 +621,15 @@ private class HttpRequestPooler
         }
         
         //try json parsing, note that formEncoding could have changed the type if there was an error, so don't use an else if
-        if requestParams.parameterType == .json && requestParams.params.count > 0
+        else if requestParams.parameterType == .json && requestParams.params.count > 0
         {
             //convert parameters to json string and form and set to body
             do {
-                let data = try JSONSerialization.data(withJSONObject: requestParams.params, options: JSONSerialization.WritingOptions(rawValue: 0))
+                let data = try JSONSerialization.data(withJSONObject: requestParams.params, options: JSONSerialization.WritingOptions.prettyPrinted)
                 request.httpBody = data
+                
+                //set our body so we can view it later for debug purposes
+                requestParams.setBody(request.httpBody)
             }
             catch let JSONError as NSError {
                 handler(nil,nil,JSONError)
@@ -627,6 +639,13 @@ private class HttpRequestPooler
             //set the request type headers
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
+        
+        //set our body from data
+        else if let body = requestParams.body
+        {
+            request.httpBody = body
+        }
+        
         
         //show our spinner
         var showingSpinner = false
