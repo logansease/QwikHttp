@@ -104,6 +104,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     open var response: URLResponse?
     open var responseString : NSString?
     open var wasIntercepted = false
+    open var responseStatusCode : Int = 0
     
     
     //class params
@@ -500,7 +501,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         
         if excludeResponse == false
         {
-            NSLog("RESPONSE:")
+            NSLog("RESPONSE: " + String(self.responseStatusCode))
             if let responseData = self.responseData, let responseString = String(data: responseData, encoding: .utf8)
             {
                 NSLog("%@", responseString)
@@ -703,6 +704,7 @@ private class HttpRequestPooler
             if let httpResponse = urlResponse as? HTTPURLResponse {
                 
                 requestParams.response = httpResponse
+                requestParams.responseStatusCode = httpResponse.statusCode
                 
                 //see if we are configured to use an interceptor and if so, check it to see if we should use it
                 if let interceptor = QwikHttpConfig.responseInterceptor , !requestParams.wasIntercepted &&  interceptor.shouldInterceptResponse(httpResponse) && !requestParams.avoidResponseInterceptor
