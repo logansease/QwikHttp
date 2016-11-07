@@ -215,6 +215,17 @@ SwiftSpinner.hide()
 }
 ```
 
+### Standard Headers
+Configure the requests to all send a set of stanard headers without the need to explicitly send them on every request
+```
+QwikHttpConfig.standardHeaders = ["api_key" : "123123" ]
+```
+
+Easily remove the standard headers on particlar requests
+```
+QwikHttp("http://test.com", httpMethod: .get).setAvoidStandardHeaders(true).run()
+```
+
 ###Response & Request Interceptors
 QwikHttp allows you to set a response interceptor that can selectively be called before each response is returned. Using this interceptor, you can do cool things like alter your responses in some way, or even cleanly handle unauthorized responses, allowing you to refresh an oAuth token or show the login screen under certain conditions.
 

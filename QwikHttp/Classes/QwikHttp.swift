@@ -65,6 +65,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     open static var responseInterceptor: QwikHttpResponseInterceptor? = nil
     open static var requestInterceptor: QwikHttpRequestInterceptor? = nil
+    open static var standardHeaders : [String : String]! = [:]
     
 //    @objc public static var responseInterceptorObjc: QwikHttpObjcResponseInterceptor? = nil
 //    @objc public static var requestInterceptorObjc: QwikHttpObjcRequestInterceptor? = nil
@@ -105,6 +106,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     open var responseString : NSString?
     open var wasIntercepted = false
     open var responseStatusCode : Int = 0
+    open var avoidStandardHeaders : Bool = false
     
     
     //class params
@@ -290,6 +292,13 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     @objc open func setCachePolicy(_ policy: URLRequest.CachePolicy) -> QwikHttp
     {
         cachePolicy = policy
+        return self
+    }
+    
+    //set the request time out
+    @objc open func setAvoidStandardHeaders(_ avoid: Bool) -> QwikHttp
+    {
+        self.avoidStandardHeaders = avoid
         return self
     }
     
@@ -506,6 +515,10 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
             {
                 NSLog("%@", responseString)
             }
+            if let error = responseError
+            {
+                NSLog("ERROR: %@",error.debugDescription)
+            }
         }
     }
 }
@@ -616,6 +629,18 @@ private class HttpRequestPooler
         //create our http request
         let request = NSMutableURLRequest(url: url, cachePolicy: requestParams.cachePolicy, timeoutInterval: requestParams.timeOut)
         
+        //add all of our standard headers if they are not yet added and the avoid flag is not set
+        if requestParams.avoidStandardHeaders == false
+        {
+            for(key, value) in QwikHttpConfig.standardHeaders
+            {
+                if !requestParams.headers.keys.contains(key)
+                {
+                    requestParams.addHeader(key, value: value)
+                }
+            }
+        }
+        
         //set up our http method and add headers
         request.httpMethod = HttpRequestPooler.paramTypeToString(requestParams.httpMethod)
         for(key, value) in requestParams.headers
@@ -719,7 +744,18 @@ private class HttpRequestPooler
                 //in order to be considered successful the response must be in the 200's
                 if httpResponse.statusCode / 100 != 2 && error == nil
                 {
-                    handler(responseData, urlResponse, NSError(domain: "QwikHttp", code: httpResponse.statusCode, userInfo: ["Error": "Error Response Code"]))
+                    //try to parse the result into an error dictionary of json, since some apis return this way
+                    //if that doesn't happen then we'll just return a generic user info dictionary
+                    var responseDict  = ["Error": "Error Response Code" as AnyObject]
+                    if let responseString = requestParams.responseString
+                    {
+                        if let errorDict = NSDictionary.fromJsonString(responseString as String) as? [String : AnyObject]
+                        {
+                            responseDict = errorDict
+                        }
+                    }
+                    
+                    handler(responseData, urlResponse, NSError(domain: "QwikHttp", code: httpResponse.statusCode, userInfo: responseDict ))
                     return
                 }
             }
