@@ -98,6 +98,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     fileprivate var parameterType : ParameterType!
     fileprivate var responseThread : ResponseThread!
     fileprivate var avoidResponseInterceptor = false
+    fileprivate var avoidStandardHeaders : Bool = false
     
     //response variables
     open var responseError : NSError?
@@ -106,7 +107,6 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     open var responseString : NSString?
     open var wasIntercepted = false
     open var responseStatusCode : Int = 0
-    open var avoidStandardHeaders : Bool = false
     
     
     //class params
@@ -295,7 +295,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         return self
     }
     
-    //set the request time out
+    //do not add standard headers if this is set to true
     @objc open func setAvoidStandardHeaders(_ avoid: Bool) -> QwikHttp
     {
         self.avoidStandardHeaders = avoid
