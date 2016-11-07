@@ -98,6 +98,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     fileprivate var parameterType : ParameterType!
     fileprivate var responseThread : ResponseThread!
     fileprivate var avoidResponseInterceptor = false
+    fileprivate var avoidRequestInterceptor = false
     fileprivate var avoidStandardHeaders : Bool = false
     
     //response variables
@@ -411,6 +412,14 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         self.avoidResponseInterceptor = true
         return self
     }
+    
+    //a helper method to duck the request interceptor. Can be useful for cases like token refresh which
+    //could lead to infinite recursion
+    @objc open func setAvoidRequestInterceptor(_ avoid : Bool)  -> QwikHttp!
+    {
+        self.avoidRequestInterceptor = true
+        return self
+    }
 
     //this method is primarily used for the response interceptor as any easy way to restart the request
     @objc open func resend(_ handler: @escaping (Data?,URLResponse?, NSError? ) -> Void)
@@ -619,7 +628,7 @@ private class HttpRequestPooler
         
         //see if this request should be intercepted and if so call the interceptor.
         //don't worry about a completion handler since this should be called by the interceptor
-        if let interceptor = QwikHttpConfig.requestInterceptor , interceptor.shouldInterceptRequest(requestParams) && !requestParams.wasIntercepted
+        if let interceptor = QwikHttpConfig.requestInterceptor, requestParams.avoidRequestInterceptor == false , interceptor.shouldInterceptRequest(requestParams), requestParams.wasIntercepted == false
         {
             requestParams.wasIntercepted = true
             interceptor.interceptRequest(requestParams, handler: handler)
