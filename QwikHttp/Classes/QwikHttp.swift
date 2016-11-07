@@ -636,7 +636,7 @@ private class HttpRequestPooler
             {
                 if !requestParams.headers.keys.contains(key)
                 {
-                    requestParams.addHeader(key, value: value)
+                    _ = requestParams.addHeader(key, value: value)
                 }
             }
         }
