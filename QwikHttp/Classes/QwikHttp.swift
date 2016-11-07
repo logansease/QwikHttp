@@ -43,14 +43,14 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 @objc public protocol QwikHttpResponseInterceptor
 {
      func shouldInterceptResponse(_ response: URLResponse!) -> Bool
-     func interceptResponse(_ request : QwikHttp!, handler: (Data?, URLResponse?, NSError?) -> Void)
+     func interceptResponse(_ request : QwikHttp!, handler: @escaping (Data?, URLResponse?, NSError?) -> Void)
 }
 
 //the request interceptor can be used to intercept requests before they are sent out.
 @objc public protocol QwikHttpRequestInterceptor
 {
     func shouldInterceptRequest(_ request: QwikHttp!) -> Bool
-    func interceptRequest(_ request : QwikHttp!,  handler: (Data?, URLResponse?, NSError?) -> Void)
+    func interceptRequest(_ request : QwikHttp!,  handler: @escaping (Data?, URLResponse?, NSError?) -> Void)
 }
 
 
