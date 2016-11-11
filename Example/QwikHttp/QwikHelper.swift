@@ -13,7 +13,6 @@ import QwikHttp
 
 @objc open class QwikHelper : NSObject,  QwikHttpLoadingIndicatorDelegate, QwikHttpResponseInterceptor, QwikHttpRequestInterceptor
 {
-    
     //standard singleton method stuff
     open class func shared() -> QwikHelper {
         struct Singleton {
@@ -52,10 +51,10 @@ import QwikHttp
     {
         return true
     }
-    public func interceptRequest(_ request : QwikHttp!,  handler: (Data?, URLResponse?, NSError?) -> Void)
+    public func interceptRequest(_ request : QwikHttp!,  handler: @escaping (Data?, URLResponse?, NSError?) -> Void)
     {
         handler(request.responseData, request.response, request.responseError)
-        //TODO check to see if response means that the token must be refreshed
+        //TODO: check to see if our current token is invalid
         //if the token needs refreshing, refresh it- then save the new token to your auth service
         //now update the header in the QwikHttp request and reset and run it again.
         //call the handler with the results of the new request.
@@ -66,9 +65,11 @@ import QwikHttp
         return false
     }
     
-    public func interceptResponse(_ request: QwikHttp!, handler: (Data?, URLResponse?, NSError?) -> Swift.Void)
-    {
-        
+    public func interceptResponse(_ request: QwikHttp!, handler: @escaping (Data?, URLResponse?, NSError?) -> Void) {
+        //TODO: check to see if response means that the token must be refreshed
+        //if the token needs refreshing, refresh it- then save the new token to your auth service
+        //now update the header in the QwikHttp request and reset and run it again.
+        //call the handler with the results of the new request.
     }
 
     

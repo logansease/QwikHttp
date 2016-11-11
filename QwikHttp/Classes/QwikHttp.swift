@@ -22,6 +22,12 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     case json = 0, formEncoded
 }
 
+//parameter types
+@objc public enum QwikHttpLoggingLevel : Int
+{
+    case none = 0, errors, requests, debug
+}
+
 //indicates if the response should be called on the background or main thread
 @objc public enum ResponseThread : Int
 {
@@ -66,6 +72,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     open static var responseInterceptor: QwikHttpResponseInterceptor? = nil
     open static var requestInterceptor: QwikHttpRequestInterceptor? = nil
     open static var standardHeaders : [String : String]! = [:]
+    open static var loggingLevel : QwikHttpLoggingLevel = .errors
     
 //    @objc public static var responseInterceptorObjc: QwikHttpObjcResponseInterceptor? = nil
 //    @objc public static var requestInterceptorObjc: QwikHttpObjcRequestInterceptor? = nil
@@ -504,31 +511,34 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     @objc open func printDebugInfo(excludeResponse : Bool = false)
     {
-        NSLog("%@ to %@", HttpRequestPooler.paramTypeToString(self.httpMethod), self.urlString)
-        NSLog("HEADERS:")
+        var log = "----- QwikHttp Request -----\n"
+        log = log + String(format: "%@ to %@\n", HttpRequestPooler.paramTypeToString(self.httpMethod), self.urlString)
+        log = log + "HEADERS:\n"
         for (key, value) in self.headers
         {
-            NSLog("%@: %@", key, value)
+            log = log + String(format: "%@: %@\n", key, value)
         }
         
-        NSLog("BODY:")
+        log = log + "BODY:\n"
         if let body = self.getBody()
         {
-            NSLog("%@", body)
+            log = log + String(format: "%@\n", body)
         }
         
         if excludeResponse == false
         {
-            NSLog("RESPONSE: " + String(self.responseStatusCode))
+            log = log + String(format: "RESPONSE: %@\n" + String(self.responseStatusCode))
             if let responseData = self.responseData, let responseString = String(data: responseData, encoding: .utf8)
             {
-                NSLog("%@", responseString)
+                log = log + responseString + "\n"
             }
             if let error = responseError
             {
-                NSLog("ERROR: %@",error.debugDescription)
+                log = log + String(format: "ERROR: %@\n",error.debugDescription)
             }
         }
+        
+        NSLog("%@",log)
     }
 }
 
@@ -618,11 +628,23 @@ private class HttpRequestPooler
 {
     class func sendRequest(_ requestParams : QwikHttp!, handler: @escaping (Data?, URLResponse?, NSError?) -> Void)
     {
+        if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+        {
+            NSLog("QwikHttp: Preparing Request For Send")
+        }
+        
         //make sure our request url is valid
         guard let url = URL(string: requestParams.urlString)
             else
         {
-            handler(nil,nil,NSError(domain: "QwikHTTP", code: 500, userInfo:["Error" : "Invalid URL"]))
+            requestParams.responseError = NSError(domain: "QwikHTTP", code: 500, userInfo:["Error" : "Invalid URL"])
+            handler(nil,nil, requestParams.responseError)
+            
+            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+            {
+                requestParams.printDebugInfo()
+            }
+            
             return
         }
         
@@ -631,6 +653,12 @@ private class HttpRequestPooler
         if let interceptor = QwikHttpConfig.requestInterceptor, requestParams.avoidRequestInterceptor == false , interceptor.shouldInterceptRequest(requestParams), requestParams.wasIntercepted == false
         {
             requestParams.wasIntercepted = true
+            
+            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+            {
+                NSLog("QwikHttp: Request being intercepted")
+            }
+            
             interceptor.interceptRequest(requestParams, handler: handler)
             return
         }
@@ -670,6 +698,7 @@ private class HttpRequestPooler
                 
                 //set the request type headers
                 //application/x-www-form-urlencoded
+                requestParams.addHeader("Content-Type", value: "application/x-www-form-urlencoded")
                 request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             }
                 
@@ -692,11 +721,21 @@ private class HttpRequestPooler
                 _ = requestParams.setBody(request.httpBody)
             }
             catch let JSONError as NSError {
+                
+                requestParams.responseError = JSONError
+                
+                if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+                {
+                    requestParams.printDebugInfo()
+                }
+                
+                
                 handler(nil,nil,JSONError)
                 return
             }
             
             //set the request type headers
+            requestParams.addHeader("Content-Type", value: "application/json")
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
@@ -715,8 +754,18 @@ private class HttpRequestPooler
             showingSpinner = true
         }
         
+        if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+        {
+            NSLog("QwikHttp: Starting Request Send")
+        }
+        
         //send our request and do a bunch of common stuff before calling our response handler
         URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (responseData, urlResponse, error) -> Void in
+            
+            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+            {
+                NSLog("QwikHttp: Request Returned")
+            }
             
             //set the values straight to the request object so we can read it if needed.
             requestParams.responseData = responseData
@@ -743,6 +792,11 @@ private class HttpRequestPooler
                 //see if we are configured to use an interceptor and if so, check it to see if we should use it
                 if let interceptor = QwikHttpConfig.responseInterceptor , !requestParams.wasIntercepted &&  interceptor.shouldInterceptResponse(httpResponse) && !requestParams.avoidResponseInterceptor
                 {
+                    if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+                    {
+                        NSLog("QwikHttp: Response being intercepted")
+                    }
+                    
                     //call the interceptor and return. The interceptor will call our handler.
                     requestParams.wasIntercepted = true
                     interceptor.interceptResponse(requestParams, handler: handler)
@@ -764,9 +818,22 @@ private class HttpRequestPooler
                         }
                     }
                     
-                    handler(responseData, urlResponse, NSError(domain: "QwikHttp", code: httpResponse.statusCode, userInfo: responseDict ))
+                    let error = NSError(domain: "QwikHttp", code: httpResponse.statusCode, userInfo: responseDict )
+                    requestParams.responseError = error
+                    
+                    if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+                    {
+                        requestParams.printDebugInfo()
+                    }
+                    
+                    handler(responseData, urlResponse, error)
                     return
                 }
+            }
+            
+            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
+            {
+                requestParams.printDebugInfo()
             }
             
             handler(responseData, urlResponse, error as NSError?)
