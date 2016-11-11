@@ -698,7 +698,7 @@ private class HttpRequestPooler
                 
                 //set the request type headers
                 //application/x-www-form-urlencoded
-                requestParams.addHeader("Content-Type", value: "application/x-www-form-urlencoded")
+                _ = requestParams.addHeader("Content-Type", value: "application/x-www-form-urlencoded")
                 request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             }
                 
@@ -735,7 +735,7 @@ private class HttpRequestPooler
             }
             
             //set the request type headers
-            requestParams.addHeader("Content-Type", value: "application/json")
+            _ = requestParams.addHeader("Content-Type", value: "application/json")
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
