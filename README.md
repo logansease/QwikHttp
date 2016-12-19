@@ -13,6 +13,14 @@ What separates QwikHttp from other Networking Libraries is its:
 QwikHttp is written in Swift 3 but works (without generics) great with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
 For a Swift 2 and objective-c compatible version, please see version 1.6.11
 
+##Swift compatibility errors
+
+If you experience this build error and you have already run Edit -> Convert -> to current Swift syntax, try adding the following to your podfile
+"Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly..."
+- Select the Pods project from your explorer in XCode
+- Select the QwikHttp target
+- Under project settings, find the LEGACY SWIFT VERSION, set it to No. Even if it is already set, set it again.
+
 ## Usage
 
 Here are some example of how easy it is to use QwikHttp.
@@ -269,6 +277,26 @@ handler(data,request.response,error)
 }
 }
 ```
+
+### Logging
+You can easily view request level information from your http requests with the request.printDebugInfo() command.
+This will result in something like this in your debugger
+```
+----- QwikHttp Request -----
+POST to https://www.server.com/api/oauth/token/
+HEADERS:
+Content-Type: application/x-www-form-urlencoded
+BODY:
+grant_type=password&password=Password
+RESPONSE: 200
+{"access_token": "AXr4YoEAqwvrFz3BeAJZPKWf4z7Zkz"}
+```
+You may also set a default logging level on QwikHttpConfig so that debug information is printed by default. The levels are:
+- error (Default) which will print a debug statement any time there is an error
+- request: which will print a debug statement for every request
+- debug: which will do the above plus print debug, low level info during the request process
+- none: turn off logging
+
 
 ### Retain it and re run it
 since QwikHttp is an object, you can hold on to it, pass it around and run it again!
