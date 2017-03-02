@@ -48,6 +48,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 //using this class will help avoid the need to do this constantly on each api call.
 @objc public protocol QwikHttpResponseInterceptor
 {
+     @objc optional func didSend(_ request: QwikHttp!)
      func shouldInterceptResponse(_ response: URLResponse!) -> Bool
      func interceptResponse(_ request : QwikHttp!, handler: @escaping (Data?, URLResponse?, NSError?) -> Void)
 }
@@ -792,6 +793,11 @@ private class HttpRequestPooler
                 
                 requestParams.response = httpResponse
                 requestParams.responseStatusCode = httpResponse.statusCode
+                
+                if let interceptor = QwikHttpConfig.responseInterceptor
+                {
+                    interceptor.didSend?(requestParams)
+                }
                 
                 //see if we are configured to use an interceptor and if so, check it to see if we should use it
                 if let interceptor = QwikHttpConfig.responseInterceptor , !requestParams.wasIntercepted &&  interceptor.shouldInterceptResponse(httpResponse) && !requestParams.avoidResponseInterceptor
