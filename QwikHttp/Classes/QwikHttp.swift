@@ -511,6 +511,11 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     @objc open func printDebugInfo(excludeResponse : Bool = false)
     {
+        NSLog("%@",debugInfo(excludeResponse: excludeResponse))
+    }
+    
+    @objc open func debugInfo(excludeResponse : Bool = false) -> String
+    {
         var log = "----- QwikHttp Request -----\n"
         log = log + String(format: "%@ to %@\n", HttpRequestPooler.paramTypeToString(self.httpMethod), self.urlString)
         log = log + "HEADERS:\n"
@@ -527,7 +532,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         
         if excludeResponse == false
         {
-            log = log + String(format: "RESPONSE: %@\n" + String(self.responseStatusCode))
+            log = log + String(format: "RESPONSE: %@\n", String(self.responseStatusCode))
             if let responseData = self.responseData, let responseString = String(data: responseData, encoding: .utf8)
             {
                 log = log + responseString + "\n"
@@ -537,8 +542,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
                 log = log + String(format: "ERROR: %@\n",error.debugDescription)
             }
         }
-        
-        NSLog("%@",log)
+        return log
     }
 }
 
