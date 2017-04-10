@@ -87,23 +87,22 @@ else if let resultError = error
 #### Get Array
 ```swift
 QwikHttp("https://api.com", httpMethod: .get).getResponseArray(NSDictionary.self, { (result, error, request) -> Void in
-if let resultArray = result
-{
-//have fun with your JSON Parsed into an array of dictionaries
-}
-else if let resultError = error
-{
-//handle that error ASAP
-}
+    if let resultArray = result
+    {
+        //have fun with your JSON Parsed into an array of dictionaries
+    }
+    else if let resultError = error
+    {
+        //handle that error ASAP
+    }
 )}
 ```
 #### Pass / Fail Boolean Response Handler
 
 You may also use a simple Yes/No success response handler.
 ```swift
-QwikHttp("https://api.com", httpMethod: .get)
-.send { (success) -> Void in
-//if success do x
+QwikHttp("https://api.com", httpMethod: .get).send { (success) -> Void in
+    //if success do x
 }
 ```
 
@@ -112,18 +111,18 @@ QwikHttp("https://api.com", httpMethod: .get)
 Response objects are saved in the request object and available to use for more low level handling.
 ```swift
 QwikHttp("https://api.com", httpMethod: .get).getResponse(NSString.self,  { (result, error, request) -> Void in
-if let responseCode = request.response.responseCode
-{
-//check for 403 responses or whatever
-}
-if let responseString = request.responseString
-{
-//handle the response as a string directly
-}
-if let responseData = request.responseData
-{
-//handle the response as nsdata directly
-}
+    if let responseCode = request.response.responseCode
+    {
+        //check for 403 responses or whatever
+    }
+    if let responseString = request.responseString
+    {
+        //handle the response as a string directly
+    }
+    if let responseData = request.responseData
+    {
+        //handle the response as nsdata directly
+    }
 )}
 ```
 
@@ -133,7 +132,8 @@ By default, all response handlers will be called on the Main Thread, however you
 
 ```swift
 QwikHttpConfig.setDefaultResponseThread(.Background)
-qwikHttp.setResponseThread(.Main)
+
+QwikHttp("https://api.com", httpMethod: .get).setResponseThread(.Main).send()
 ```
 
 ### QwikJson
@@ -147,7 +147,7 @@ Essentially, just subclass QwikJson in a complex model object and you can serial
 //declare your complex class with whatever properties
 public Class MyModel : QwikJson
 {
-var myProperty = "sweet"
+    var myProperty = "sweet"
 }
 ```
 
@@ -155,11 +155,13 @@ Now you can pass and return QwikJson Objects to and from your RESTful API with e
 ```swift
 let model = MyModel()
 
-QwikHttp("https://api.com", httpMethod: .post).setObject(model).getResponse(MyModel.self,  { (result, error, request) -> Void in
-if let result as? Model
-{
-//you got a model back, with no parsing code!
-}
+QwikHttp("https://api.com", httpMethod: .post)
+    .setObject(model)
+    .getResponse(MyModel.self,  { (result, error, request) -> Void in
+    if let result as? Model
+    {
+        //you got a model back, with no parsing code!
+    }
 })
 ```
 
@@ -168,11 +170,12 @@ It even works with arrays
 let model = MyModel()
 let models = [model]
 
-QwikHttp("https://api.com", httpMethod: .post).setObjects(models).getArrayResponse(MyModel.self, { (results, error, request) -> Void in
-if let modelArray = results as? [Model]
-{
-//you got an array of models back, with no parsing code!
-}
+QwikHttp("https://api.com", httpMethod: .post).setObjects(models)
+    .getArrayResponse(MyModel.self, { (results, error, request) -> Void in
+    if let modelArray = results as? [Model]
+    {
+        //you got an array of models back, with no parsing code!
+    }
 })
 ```
 
@@ -203,23 +206,24 @@ The example below shows using a singleton helper class to handle your indicators
 import SwiftSpinner
 public class QwikHelper :  QwikHttpLoadingIndicatorDelegate
 {
-public class func shared() -> QwikHelper {
-struct Singleton {
-static let instance = QwikHelper()
-}
-QwikHttpConfig.loadingIndicatorDelegate = Singleton.instance
-return Singleton.instance
-}
+    public class func shared() -> QwikHelper {
+    struct Singleton {
+        static let instance = QwikHelper()
+    }
 
-@objc public func showIndicator(title: String!)
-{
-SwiftSpinner.show(title)
-}
+    QwikHttpConfig.loadingIndicatorDelegate = Singleton.instance
+    return Singleton.instance
+    }
 
-@objc public func hideIndicator()
-{
-SwiftSpinner.hide()
-}
+    @objc public func showIndicator(title: String!)
+    {
+        SwiftSpinner.show(title)
+    }
+
+    @objc public func hideIndicator()   
+    {
+        SwiftSpinner.hide()
+    }
 }
 ```
 
@@ -239,42 +243,45 @@ QwikHttp allows you to set a response interceptor that can selectively be called
 
 You may also use a Request Interceptor to intercept requests before they are even sent. This could allow you to detect that a token is expired or that an action is not authorized before even sending your request.
 
+Note that interceptors can be disabled on a per request basis
 ```swift
 public class QwikHelper : QwikHttpResponseInterceptor, QwikHttpRequestInterceptor
 {
-public class func shared() -> QwikHelper {
-struct Singleton {
-static let instance = QwikHelper()
-}
-QwikHttpConfig.responseInterceptor = Singleton.instance
-return Singleton.instance
-}
+    public class func shared() -> QwikHelper {
+    struct Singleton {
+        static let instance = QwikHelper()
+    }
+    QwikHttpConfig.responseInterceptor = Singleton.instance
+    return Singleton.instance
+    }
 
-@objc public func shouldInterceptResponse(response: NSURLResponse!) -> Bool
-{
-//TODO check for an unautorized response and return true if so
-return false
-}
+    @objc public func shouldInterceptResponse(response: NSURLResponse!) -> Bool
+    {
+    //TODO check for an unautorized response and return true if so
+    return false
+    }
 
-@objc public func interceptResponse(request : QwikHttp!, handler: (NSData?, NSURLResponse?, NSError?) -> Void)
-{
-//TODO check to see if response means that the token must be refreshed
-//if the token needs refreshing, refresh it- then save the new token to your auth service
-//now update the auth header in the QwikHttp request and reset and run it again.
-//call the handler with the results of the new request.
-}
-public func shouldInterceptRequest(request: QwikHttp!) -> Bool
-{
-//check for an expired token date on your current token
-return true
-}
-public func interceptRequest(request : QwikHttp!,  handler: (NSData?, NSURLResponse?, NSError?) -> Void)
-{
-//TODO refresh your token, restart the request
-//update the auth headers with the new token
-request.getResponse(NSData.self) { (data, error, request) -> Void! in
-handler(data,request.response,error)
-}
+    @objc public func interceptResponse(request : QwikHttp!, handler: (NSData?, NSURLResponse?, NSError?) -> Void)
+    {
+    //TODO check to see if response means that the token must be refreshed
+    //if the token needs refreshing, refresh it- then save the new token to your auth service
+    //now update the auth header in the QwikHttp request and reset and run it again.
+    //call the handler with the results of the new request.
+    }
+
+    public func shouldInterceptRequest(request: QwikHttp!) -> Bool
+    {
+    //check for an expired token date on your current token
+    return true
+    }
+
+    public func interceptRequest(request : QwikHttp!,  handler: (NSData?, NSURLResponse?, NSError?) -> Void)
+    {
+    //TODO refresh your token, restart the request
+    //update the auth headers with the new token
+    request.getResponse(NSData.self) { (data, error, request) -> Void! in
+    handler(data,request.response,error)
+    }
 }
 ```
 
@@ -304,18 +311,18 @@ since QwikHttp is an object, you can hold on to it, pass it around and run it ag
 ```swift
 func setup()
 {
-let self.qwikHttp = QwikHttp("https://api.com", httpMethod: .get)
-run(self.qwikHttp)
+    let self.qwikHttp = QwikHttp("https://api.com", httpMethod: .get)
+    run(self.qwikHttp)
 
-//run it again after some delay
-NSThread.sleep(1000)
-self.qwikHttp.reset()
-run(self.qwikHttp)
+    //run it again after some delay
+    NSThread.sleep(1000)
+    self.qwikHttp.reset()
+    run(self.qwikHttp)
 }
 
 func run(qwikHttp: QwikHttp!)
 {
-qwikHttp.run()
+    qwikHttp.send()
 }
 
 ```
@@ -361,16 +368,16 @@ Instead of using generic type handlers, you may use the boolean handler or a str
 
 -(IBAction)sendRequest:(id)sender
 {
-[[[[QwikHttp alloc]init:@"https://resttest2016.herokuapp.com/restaurants" httpMethod:HttpRequestMethodGet] 
-addUrlParams:@{@"format" : @"json"}]
-getArrayResponse:^(NSArray * results, NSError * error, QwikHttp * request) {
+    [[[[QwikHttp alloc]init:@"https://resttest2016.herokuapp.com/restaurants" httpMethod:HttpRequestMethodGet] 
+        addUrlParams:@{@"format" : @"json"}]
+        getArrayResponse:^(NSArray * results, NSError * error, QwikHttp * request) {
 
-if(results)
-{
-NSArray * restaurants = [Restaurant arrayForJsonArray:data ofClass:[Restaurant class]];
-[UIAlertController showAlertWithTitle:@"Success" andMessage:[NSString stringWithFormat:@"Got %li",(long)restaurants.count] from:self];
-}
-}];
+        if(results)
+        {
+            NSArray * restaurants = [Restaurant arrayForJsonArray:data ofClass:[Restaurant class]];
+            [UIAlertController showAlertWithTitle:@"Success" andMessage:[NSString stringWithFormat:@"Got %li",(long)restaurants.count] from:self];
+        }
+    }];
 }
 ```
 
