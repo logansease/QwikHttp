@@ -13,7 +13,7 @@ What separates QwikHttp from other Networking Libraries is its:
 QwikHttp is written in Swift 3 but works (without generics) great with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
 For a Swift 2 and objective-c compatible version, please see version 1.6.11
 
-##Swift compatibility errors
+## Swift compatibility errors
 
 If you experience this build error and you have already run Edit -> Convert -> to current Swift syntax, try adding the following to your podfile
 "Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly..."
@@ -25,13 +25,13 @@ If you experience this build error and you have already run Edit -> Convert -> t
 
 Here are some example of how easy it is to use QwikHttp.
 
-###A simple request
+### A simple request
 
 ```swift
 QwikHttp("https://api.com", httpMethod: .get).send()
 ```
 
-###Parameters and Headers
+### Parameters and Headers
 
 You can set json, url or form encoded parameters
 ```swift
@@ -54,7 +54,7 @@ let headers = ["Content-Type": "image/png"]
 QwikHttp("https://api.com", httpMethod: .post).setBody(data).addHeaders(headers).send()
 ```
 
-###Generic
+### Generic
 
 Note QwikHttp uses Generic completion handlers. Tell it what type you expect back in the response and it will handle your conversion.
 
@@ -238,7 +238,7 @@ Easily remove the standard headers on particlar requests
 QwikHttp("http://test.com", httpMethod: .get).setAvoidStandardHeaders(true).run()
 ```
 
-###Response & Request Interceptors
+### Response & Request Interceptors
 QwikHttp allows you to set a response interceptor that can selectively be called before each response is returned. Using this interceptor, you can do cool things like alter your responses in some way, or even cleanly handle unauthorized responses, allowing you to refresh an oAuth token or show the login screen under certain conditions.
 
 You may also use a Request Interceptor to intercept requests before they are even sent. This could allow you to detect that a token is expired or that an action is not authorized before even sending your request.
@@ -384,7 +384,7 @@ Instead of using generic type handlers, you may use the boolean handler or a str
 
 ## Installation
 
-###Pods
+### Pods
 QwikHttp is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
