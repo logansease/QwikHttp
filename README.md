@@ -13,14 +13,6 @@ What separates QwikHttp from other Networking Libraries is its:
 QwikHttp is written in Swift 3 but works (without generics) great with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
 For a Swift 2 and objective-c compatible version, please see version 1.6.11
 
-##Swift compatibility errors
-
-If you experience this build error and you have already run Edit -> Convert -> to current Swift syntax, try adding the following to your podfile
-"Use Legacy Swift Language Version” (SWIFT_VERSION) is required to be configured correctly..."
-- Select the Pods project from your explorer in XCode
-- Select the QwikHttp target
-- Under project settings, find the LEGACY SWIFT VERSION, set it to No. Even if it is already set, set it again.
-
 ## Usage
 
 Here are some example of how easy it is to use QwikHttp.
@@ -38,20 +30,31 @@ You can set json, url or form encoded parameters
 let params = ["awesome" : "true"]
 
 //url parameters
-QwikHttp("https://api.com", httpMethod: .get).addUrlParameters(params).send()
+QwikHttp("https://api.com", httpMethod: .get)
+    .addUrlParameters(params)
+    .send()
 
 //form parameters
-QwikHttp("https://api.com", httpMethod: .get).addParameters(params).setParameterType(.urlEncoded).send()
+QwikHttp("https://api.com", httpMethod: .get)
+    .addParameters(params)
+    .setParameterType(.urlEncoded)
+    .send()
 
 //json parameters
-QwikHttp("https://api.com", httpMethod: .get).addParameters(params).setParameterType(.json).send()
+QwikHttp("https://api.com", httpMethod: .get)
+    .addParameters(params)
+    .setParameterType(.json)
+    .send()
 ```
 
 You can set the body directly and add your own headers
 ```swift
 let data =  UIImagePNGRepresentation(someImage);
 let headers = ["Content-Type": "image/png"]
-QwikHttp("https://api.com", httpMethod: .post).setBody(data).addHeaders(headers).send()
+QwikHttp("https://api.com", httpMethod: .post)
+    .setBody(data)
+    .addHeaders(headers)
+    .send()
 ```
 
 ###Generic
@@ -73,20 +76,24 @@ Depending on your needs, you may wish to call the objectHandler if you are expec
 
 #### Get Object
 ```swift
-QwikHttp(url: "https://api.com", httpMethod: .get).getResponse(NSDictionary.self,  { (result, error, request) -> Void in
-if let resultDictionary = result
-{
-//have fun with your JSON Parsed into a dictionary!
-}
-else if let resultError = error
-{
-//handle that error ASAP
-}
+QwikHttp(url: "https://api.com", httpMethod: .get)
+    .getResponse(NSDictionary.self,  { (result, error, request) -> Void in
+
+    if let resultDictionary = result
+    {
+        //have fun with your JSON Parsed into a dictionary!
+    }
+    else if let resultError = error
+    {
+        //handle that error ASAP
+    }
 )}
 ```
 #### Get Array
 ```swift
-QwikHttp("https://api.com", httpMethod: .get).getResponseArray(NSDictionary.self, { (result, error, request) -> Void in
+QwikHttp("https://api.com", httpMethod: .get)
+    .getResponseArray(NSDictionary.self, { (result, error, request) -> Void in
+
     if let resultArray = result
     {
         //have fun with your JSON Parsed into an array of dictionaries
@@ -101,7 +108,9 @@ QwikHttp("https://api.com", httpMethod: .get).getResponseArray(NSDictionary.self
 
 You may also use a simple Yes/No success response handler.
 ```swift
-QwikHttp("https://api.com", httpMethod: .get).send { (success) -> Void in
+QwikHttp("https://api.com", httpMethod: .get)
+    .send { (success) -> Void in
+
     //if success do x
 }
 ```
@@ -110,7 +119,8 @@ QwikHttp("https://api.com", httpMethod: .get).send { (success) -> Void in
 
 Response objects are saved in the request object and available to use for more low level handling.
 ```swift
-QwikHttp("https://api.com", httpMethod: .get).getResponse(NSString.self,  { (result, error, request) -> Void in
+QwikHttp("https://api.com", httpMethod: .get)
+    .getResponse(NSString.self,  { (result, error, request) -> Void in
     if let responseCode = request.response.responseCode
     {
         //check for 403 responses or whatever
@@ -133,7 +143,9 @@ By default, all response handlers will be called on the Main Thread, however you
 ```swift
 QwikHttpConfig.setDefaultResponseThread(.Background)
 
-QwikHttp("https://api.com", httpMethod: .get).setResponseThread(.Main).send()
+QwikHttp("https://api.com", httpMethod: .get)
+    .setResponseThread(.Main)
+    .send()
 ```
 
 ### QwikJson
@@ -170,7 +182,8 @@ It even works with arrays
 let model = MyModel()
 let models = [model]
 
-QwikHttp("https://api.com", httpMethod: .post).setObjects(models)
+QwikHttp("https://api.com", httpMethod: .post)
+    .setObjects(models)
     .getArrayResponse(MyModel.self, { (results, error, request) -> Void in
     if let modelArray = results as? [Model]
     {
@@ -186,7 +199,9 @@ By using the QwikHttpLoadingIndicatorDelegate protocol, you can provide an inter
 Once the default indicator delegate is set to QwikHttpConfig, Simply call the setLoadingTitle Method on your QwikHttp object and an indicator will automatically show when your request is running and hide when it completes
 
 ```swift
-QwikHttp("https://api.com", httpMethod: .get).setLoadingTitle("Loading").send()
+QwikHttp("https://api.com", httpMethod: .get)
+    .setLoadingTitle("Loading")
+    .send()
 ```
 
 You can set the default title for the loading indicator, passing a nil title will keep it hidden (this is the default behavior), passing a string, even an empty one will make your indicator show and hide automatically by default
@@ -212,7 +227,7 @@ public class QwikHelper :  QwikHttpLoadingIndicatorDelegate
     }
 
     QwikHttpConfig.loadingIndicatorDelegate = Singleton.instance
-    return Singleton.instance
+        return Singleton.instance
     }
 
     @objc public func showIndicator(title: String!)
@@ -235,7 +250,8 @@ QwikHttpConfig.standardHeaders = ["api_key" : "123123" ]
 
 Easily remove the standard headers on particlar requests
 ```
-QwikHttp("http://test.com", httpMethod: .get).setAvoidStandardHeaders(true).run()
+QwikHttp("http://test.com", httpMethod: .get)
+    .setAvoidStandardHeaders(true).run()
 ```
 
 ###Response & Request Interceptors
@@ -252,35 +268,35 @@ public class QwikHelper : QwikHttpResponseInterceptor, QwikHttpRequestIntercepto
         static let instance = QwikHelper()
     }
     QwikHttpConfig.responseInterceptor = Singleton.instance
-    return Singleton.instance
+        return Singleton.instance
     }
 
     @objc public func shouldInterceptResponse(response: NSURLResponse!) -> Bool
     {
-    //TODO check for an unautorized response and return true if so
-    return false
+        //TODO check for an unautorized response and return true if so
+        return false
     }
 
     @objc public func interceptResponse(request : QwikHttp!, handler: (NSData?, NSURLResponse?, NSError?) -> Void)
     {
-    //TODO check to see if response means that the token must be refreshed
-    //if the token needs refreshing, refresh it- then save the new token to your auth service
-    //now update the auth header in the QwikHttp request and reset and run it again.
-    //call the handler with the results of the new request.
+        //TODO check to see if response means that the token must be refreshed
+        //if the token needs refreshing, refresh it- then save the new token to your auth service
+        //now update the auth header in the QwikHttp request and reset and run it again.
+        //call the handler with the results of the new request.
     }
 
     public func shouldInterceptRequest(request: QwikHttp!) -> Bool
     {
-    //check for an expired token date on your current token
-    return true
+        //check for an expired token date on your current token
+        return true
     }
 
     public func interceptRequest(request : QwikHttp!,  handler: (NSData?, NSURLResponse?, NSError?) -> Void)
     {
-    //TODO refresh your token, restart the request
-    //update the auth headers with the new token
-    request.getResponse(NSData.self) { (data, error, request) -> Void! in
-    handler(data,request.response,error)
+        //TODO refresh your token, restart the request
+        //update the auth headers with the new token
+        request.getResponse(NSData.self) { (data, error, request) -> Void! in
+        handler(data,request.response,error)
     }
 }
 ```
