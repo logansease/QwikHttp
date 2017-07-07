@@ -151,7 +151,7 @@ QwikHttp("https://api.com", httpMethod: .get)
 ### QwikJson
 QwikJson, our Json serialization library, is now directly integrated with QwikHttp. This means that there is built in support for a range of complex model objects.
 
-For full documentation on QwikJson, see our repo at https://github.com/qonceptual/QwikJson
+For full documentation on QwikJson, see my repo at https://github.com/logansease/QwikJson
 
 Essentially, just subclass QwikJson in a complex model object and you can serialize and deserialize those model objects automatically with QwikHttp.
 
