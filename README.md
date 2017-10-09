@@ -159,9 +159,10 @@ Essentially, just subclass QwikJson in a complex model object and you can serial
 //declare your complex class with whatever properties
 public Class MyModel : QwikJson
 {
-    var myProperty = "sweet"
+    @objc var myProperty = "sweet"
 }
 ```
+* NOTE: When using Swift 4 all properties must be prefaced with @objc for them to be serialized / deserialized.
 
 Now you can pass and return QwikJson Objects to and from your RESTful API with ease!
 ```swift
