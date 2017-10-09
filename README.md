@@ -387,7 +387,8 @@ Instead of using generic type handlers, you may use the boolean handler or a str
 
 -(IBAction)sendRequest:(id)sender
 {
-    [[[[QwikHttp alloc]init:@"https://resttest2016.herokuapp.com/restaurants" httpMethod:HttpRequestMethodGet] 
+    [[[[QwikHttp alloc]init:@"https://resttest2016.herokuapp.com/restaurants" 
+        httpMethod:HttpRequestMethodGet] 
         addUrlParams:@{@"format" : @"json"}]
         getArrayResponse:^(NSArray * results, NSError * error, QwikHttp * request) {
 
