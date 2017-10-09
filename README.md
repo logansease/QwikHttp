@@ -10,7 +10,7 @@ What separates QwikHttp from other Networking Libraries is its:
 - simple, yet robust loading indicator support
 - response interceptors to provide a method to handle unauthorized responses and token refreshing with ease.
 
-QwikHttp is written in Swift 3 but works (without generics) great with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
+QwikHttp is written in Swift 3 and works great with Swift. It even works great (without generics) with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
 For a Swift 2 and objective-c compatible version, please see version 1.6.11
 
 ## Usage
