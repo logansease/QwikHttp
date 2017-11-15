@@ -10,7 +10,7 @@ What separates QwikHttp from other Networking Libraries is its:
 - simple, yet robust loading indicator support
 - response interceptors to provide a method to handle unauthorized responses and token refreshing with ease.
 
-QwikHttp is written in Swift 3 but works (without generics) great with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
+QwikHttp is written in Swift 3 and works great with Swift. It even works great (without generics) with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
 For a Swift 2 and objective-c compatible version, please see version 1.6.11
 
 ## Usage
@@ -153,7 +153,7 @@ QwikHttp("https://api.com", httpMethod: .get)
 ### QwikJson
 QwikJson, our Json serialization library, is now directly integrated with QwikHttp. This means that there is built in support for a range of complex model objects.
 
-For full documentation on QwikJson, see our repo at https://github.com/qonceptual/QwikJson
+For full documentation on QwikJson, see my repo at https://github.com/logansease/QwikJson
 
 Essentially, just subclass QwikJson in a complex model object and you can serialize and deserialize those model objects automatically with QwikHttp.
 
@@ -161,9 +161,10 @@ Essentially, just subclass QwikJson in a complex model object and you can serial
 //declare your complex class with whatever properties
 public Class MyModel : QwikJson
 {
-    var myProperty = "sweet"
+    @objc var myProperty = "sweet"
 }
 ```
+* NOTE: When using Swift 4 all properties must be prefaced with @objc for them to be serialized / deserialized.
 
 Now you can pass and return QwikJson Objects to and from your RESTful API with ease!
 ```swift
@@ -388,7 +389,8 @@ Instead of using generic type handlers, you may use the boolean handler or a str
 
 -(IBAction)sendRequest:(id)sender
 {
-    [[[[QwikHttp alloc]init:@"https://resttest2016.herokuapp.com/restaurants" httpMethod:HttpRequestMethodGet] 
+    [[[[QwikHttp alloc]init:@"https://resttest2016.herokuapp.com/restaurants" 
+        httpMethod:HttpRequestMethodGet] 
         addUrlParams:@{@"format" : @"json"}]
         getArrayResponse:^(NSArray * results, NSError * error, QwikHttp * request) {
 
