@@ -1,6 +1,8 @@
 # OS X
 .DS_Store
 
+Example/Pods/Pods.xcodeproj/project.xcworkspace/
+
 # Xcode
 build/
 *.pbxuser

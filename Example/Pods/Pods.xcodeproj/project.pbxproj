@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0018263785A2809DD4F8014938B000D6 /* NSFileManager+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = D042FCC61B2E3D8F5E48B65B7233F84E /* NSFileManager+Helpers.m */; };
+		00435A461FBCA681001D08B8 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00435A451FBCA681001D08B8 /* Serializable.swift */; };
 		01B87EFBA77B013484FE296242BF9D55 /* MailService.m in Sources */ = {isa = PBXBuildFile; fileRef = D54B55B60BAB4038943EDDADCB7090BC /* MailService.m */; };
 		0447E8E4AB3663268F0DB2461FC6CC38 /* NSString+Initials.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8858E28E2E21EA6E929BA400AFCE17 /* NSString+Initials.m */; };
 		050C681E117DC41482773B3F613CADD3 /* RoundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 311F4529CEFC376634DA259F00A96AC0 /* RoundedView.m */; };
@@ -210,6 +211,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00435A451FBCA681001D08B8 /* Serializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		006B0EBFE56806FABAE5BFB45E5E80A8 /* UIImage+Blur.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Blur.h"; path = "Pod/Classes/UIImage+Blur.h"; sourceTree = "<group>"; };
 		00EFFD131CBD2E53EBE40014E0EFF265 /* NSDate+Helpers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDate+Helpers.h"; path = "Pod/Classes/NSDate+Helpers.h"; sourceTree = "<group>"; };
 		010AC840CCC563ADAFBA9ABDF753D17E /* Pods-QwikHttp_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-QwikHttp_Tests-resources.sh"; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 		57ACD7C713FF923249C48E4DD8247C18 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				00435A451FBCA681001D08B8 /* Serializable.swift */,
 				A3634D317A764E7FEE6C246715DA10A1 /* QwikDataConversion.swift */,
 				A004119987C966548E346130EC7FB39E /* QwikHttp.swift */,
 			);
@@ -1063,6 +1066,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00435A461FBCA681001D08B8 /* Serializable.swift in Sources */,
 				8A77D42E1D81C6C95753AD7B0FF98467 /* QwikDataConversion.swift in Sources */,
 				9173A3C7E5F12BDC3542743E882E1895 /* QwikHttp-dummy.m in Sources */,
 				B88574C6A6E5307A00AB5291EDB4B1E9 /* QwikHttp.swift in Sources */,

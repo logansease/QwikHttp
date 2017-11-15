@@ -512,7 +512,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     @objc open func printDebugInfo(excludeResponse : Bool = false)
     {
-        NSLog("%@",debugInfo(excludeResponse: excludeResponse))
+        print(debugInfo(excludeResponse: excludeResponse))
     }
     
     @objc open func debugInfo(excludeResponse : Bool = false) -> String
