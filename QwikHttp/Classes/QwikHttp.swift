@@ -351,7 +351,13 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
                 else
                 {
                     self.determineThread({ () -> () in
-                        handler(nil,NSError(domain: "QwikHttp", code: 500, userInfo: ["Error" : "Could not parse response"]), self)
+                        
+                        if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+                        {
+                            requestParams.printDebugInfo()
+                        }
+                        
+                        handler(nil,NSError(domain: "QwikHttp", code: -1, userInfo: ["Error" : "Could not parse response"]), self)
                     })
                 }
             }
@@ -383,7 +389,13 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
                 {
                     //error if we could not deserialize
                     self.determineThread({ () -> () in
-                        handler(nil,NSError(domain: "QwikHttp", code: 500, userInfo: ["Error" : "Could not parse response"]), self)
+                        
+                        if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+                        {
+                            requestParams.printDebugInfo()
+                        }
+                        
+                        handler(nil,NSError(domain: "QwikHttp", code: -1, userInfo: ["Error" : "Could not parse response"]), self)
                     })
                 }
             }
@@ -635,7 +647,7 @@ private class HttpRequestPooler
     {
         if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
         {
-            NSLog("QwikHttp: Preparing Request For Send")
+            print("QwikHttp: Preparing Request For Send")
         }
         
         //make sure our request url is valid
@@ -661,7 +673,7 @@ private class HttpRequestPooler
             
             if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
             {
-                NSLog("QwikHttp: Request being intercepted")
+                print("QwikHttp: Request being intercepted")
             }
             
             interceptor.interceptRequest(requestParams, handler: handler)
@@ -761,7 +773,8 @@ private class HttpRequestPooler
         
         if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
         {
-            NSLog("QwikHttp: Starting Request Send")
+            print("QwikHttp: Starting Request Send")
+            request.printDebugInfo(excludeResponse: true)
         }
         
         //send our request and do a bunch of common stuff before calling our response handler
@@ -769,7 +782,7 @@ private class HttpRequestPooler
             
             if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
             {
-                NSLog("QwikHttp: Request Returned")
+                print("QwikHttp: Request Returned")
             }
             
             //set the values straight to the request object so we can read it if needed.
@@ -804,7 +817,7 @@ private class HttpRequestPooler
                 {
                     if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
                     {
-                        NSLog("QwikHttp: Response being intercepted")
+                        print("QwikHttp: Response being intercepted")
                     }
                     
                     //call the interceptor and return. The interceptor will call our handler.
@@ -843,6 +856,7 @@ private class HttpRequestPooler
             
             if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
             {
+                print("QwikHttp: Starting Request Completed")
                 requestParams.printDebugInfo()
             }
             
