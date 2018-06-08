@@ -269,7 +269,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     //add a list of headers
     @objc open func addHeaders(_ headers: [String: String]!) -> QwikHttp
     {
-        self.headers = combinedDictionary(self.headers as [String : AnyObject]!, with: headers as [String : AnyObject]!) as! [String : String]
+        self.headers = combinedDictionary(self.headers as [String : AnyObject], with: headers as [String : AnyObject]!) as! [String : String]
         return self
     }
     
@@ -354,10 +354,10 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
                         
                         if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
                         {
-                            requestParams.printDebugInfo()
+                            self.printDebugInfo()
                         }
                         
-                        handler(nil,NSError(domain: "QwikHttp", code: -1, userInfo: ["Error" : "Could not parse response"]), self)
+                        handler(nil,NSError(domain: "QwikHttp", code: 0, userInfo: ["Error" : "Could not parse response"]), self)
                     })
                 }
             }
@@ -392,10 +392,10 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
                         
                         if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
                         {
-                            requestParams.printDebugInfo()
+                            self.printDebugInfo()
                         }
                         
-                        handler(nil,NSError(domain: "QwikHttp", code: -1, userInfo: ["Error" : "Could not parse response"]), self)
+                        handler(nil,NSError(domain: "QwikHttp", code: 0, userInfo: ["Error" : "Could not parse response"]), self)
                     })
                 }
             }
@@ -774,7 +774,7 @@ private class HttpRequestPooler
         if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
         {
             print("QwikHttp: Starting Request Send")
-            request.printDebugInfo(excludeResponse: true)
+            requestParams.printDebugInfo(excludeResponse: true)
         }
         
         //send our request and do a bunch of common stuff before calling our response handler
