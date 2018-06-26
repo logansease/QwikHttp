@@ -48,9 +48,9 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 //using this class will help avoid the need to do this constantly on each api call.
 @objc public protocol QwikHttpResponseInterceptor
 {
-     @objc optional func didSend(_ request: QwikHttp!)
-     func shouldInterceptResponse(_ response: URLResponse!) -> Bool
-     func interceptResponse(_ request : QwikHttp!, handler: @escaping (Data?, URLResponse?, NSError?) -> Void)
+    @objc optional func didSend(_ request: QwikHttp!)
+    func shouldInterceptResponse(_ response: URLResponse!) -> Bool
+    func interceptResponse(_ request : QwikHttp!, handler: @escaping (Data?, URLResponse?, NSError?) -> Void)
 }
 
 //the request interceptor can be used to intercept requests before they are sent out.
@@ -75,8 +75,8 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     open static var standardHeaders : [String : String]! = [:]
     open static var loggingLevel : QwikHttpLoggingLevel = .errors
     
-//    @objc public static var responseInterceptorObjc: QwikHttpObjcResponseInterceptor? = nil
-//    @objc public static var requestInterceptorObjc: QwikHttpObjcRequestInterceptor? = nil
+    //    @objc public static var responseInterceptorObjc: QwikHttpObjcResponseInterceptor? = nil
+    //    @objc public static var requestInterceptorObjc: QwikHttpObjcRequestInterceptor? = nil
     
     open static var defaultResponseThread : ResponseThread = .main
     
@@ -269,7 +269,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     //add a list of headers
     @objc open func addHeaders(_ headers: [String: String]!) -> QwikHttp
     {
-        self.headers = combinedDictionary(self.headers as [String : AnyObject], with: headers as [String : AnyObject]!) as! [String : String]
+        self.headers = combinedDictionary(self.headers as [String : AnyObject]?, with: headers as [String : AnyObject]!) as! [String : String]
         return self
     }
     
@@ -357,7 +357,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
                             self.printDebugInfo()
                         }
                         
-                        handler(nil,NSError(domain: "QwikHttp", code: 0, userInfo: ["Error" : "Could not parse response"]), self)
+                        handler(nil,NSError(domain: "QwikHttp", code: 500, userInfo: ["Error" : "Could not parse response"]), self)
                     })
                 }
             }
@@ -395,7 +395,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
                             self.printDebugInfo()
                         }
                         
-                        handler(nil,NSError(domain: "QwikHttp", code: 0, userInfo: ["Error" : "Could not parse response"]), self)
+                        handler(nil,NSError(domain: "QwikHttp", code: 500, userInfo: ["Error" : "Could not parse response"]), self)
                     })
                 }
             }
@@ -440,7 +440,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         self.avoidRequestInterceptor = true
         return self
     }
-
+    
     //this method is primarily used for the response interceptor as any easy way to restart the request
     @objc open func resend(_ handler: @escaping (Data?,URLResponse?, NSError? ) -> Void)
     {
@@ -464,7 +464,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     fileprivate func combinedDictionary(_ from: [String:AnyObject]!, with: [String:AnyObject]! ) -> [String:AnyObject]!
     {
         var result = from
-
+        
         //ensure someone didn't pass us nil on accident
         if(with == nil)
         {
@@ -530,7 +530,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     @objc open func debugInfo(excludeResponse : Bool = false) -> String
     {
         var log = "----- QwikHttp Request -----\n"
-        log = log + String(format: "%@ to %@\n", HttpRequestPooler.paramTypeToString(self.httpMethod), self.urlString)
+        log = log + self.requestDescription()
         log = log + "HEADERS:\n"
         for (key, value) in self.headers
         {
@@ -556,6 +556,11 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
             }
         }
         return log
+    }
+    
+    @objc open func requestDescription() -> String
+    {
+        return String(format: "%@ to %@\n", HttpRequestPooler.paramTypeToString(self.httpMethod), self.urlString)
     }
 }
 
@@ -725,8 +730,8 @@ private class HttpRequestPooler
                 _ = requestParams.setParameterType(.json)
             }
         }
-        
-        //try json parsing, note that formEncoding could have changed the type if there was an error, so don't use an else if
+            
+            //try json parsing, note that formEncoding could have changed the type if there was an error, so don't use an else if
         else if requestParams.parameterType == .json && requestParams.params.count > 0
         {
             //convert parameters to json string and form and set to body
@@ -746,7 +751,6 @@ private class HttpRequestPooler
                     requestParams.printDebugInfo()
                 }
                 
-                
                 handler(nil,nil,JSONError)
                 return
             }
@@ -755,8 +759,8 @@ private class HttpRequestPooler
             _ = requestParams.addHeader("Content-Type", value: "application/json")
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
-        
-        //set our body from data
+            
+            //set our body from data
         else if let body = requestParams.body
         {
             request.httpBody = body
@@ -774,7 +778,6 @@ private class HttpRequestPooler
         if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
         {
             print("QwikHttp: Starting Request Send")
-            requestParams.printDebugInfo(excludeResponse: true)
         }
         
         //send our request and do a bunch of common stuff before calling our response handler
@@ -807,6 +810,25 @@ private class HttpRequestPooler
                 requestParams.response = httpResponse
                 requestParams.responseStatusCode = httpResponse.statusCode
                 
+                //if we didn't have an error from the http lib, but the response errored, then parse
+                //and save the error response before we do intercept methods
+                if httpResponse.statusCode / 100 != 2 && error == nil
+                {
+                    //try to parse the result into an error dictionary of json, since some apis return this way
+                    //if that doesn't happen then we'll just return a generic user info dictionary
+                    var responseDict  = ["Error": "Error Response Code" as AnyObject]
+                    if let responseString = requestParams.responseString
+                    {
+                        if let errorDict = NSDictionary.fromJsonString(responseString as String) as? [String : AnyObject]
+                        {
+                            responseDict = errorDict
+                        }
+                    }
+                    
+                    let error = NSError(domain: "QwikHttp", code: httpResponse.statusCode, userInfo: responseDict )
+                    requestParams.responseError = error
+                }
+                
                 if let interceptor = QwikHttpConfig.responseInterceptor
                 {
                     interceptor.didSend?(requestParams)
@@ -830,33 +852,18 @@ private class HttpRequestPooler
                 //in order to be considered successful the response must be in the 200's
                 if httpResponse.statusCode / 100 != 2 && error == nil
                 {
-                    //try to parse the result into an error dictionary of json, since some apis return this way
-                    //if that doesn't happen then we'll just return a generic user info dictionary
-                    var responseDict  = ["Error": "Error Response Code" as AnyObject]
-                    if let responseString = requestParams.responseString
-                    {
-                        if let errorDict = NSDictionary.fromJsonString(responseString as String) as? [String : AnyObject]
-                        {
-                            responseDict = errorDict
-                        }
-                    }
-                    
-                    let error = NSError(domain: "QwikHttp", code: httpResponse.statusCode, userInfo: responseDict )
-                    requestParams.responseError = error
-                    
                     if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
                     {
                         requestParams.printDebugInfo()
                     }
                     
-                    handler(responseData, urlResponse, error)
+                    handler(responseData, urlResponse, requestParams.responseError)
                     return
                 }
             }
             
             if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
             {
-                print("QwikHttp: Starting Request Completed")
                 requestParams.printDebugInfo()
             }
             
@@ -897,6 +904,6 @@ private class HttpRequestPooler
 }
 
 
-        
+
 
 
