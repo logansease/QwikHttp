@@ -98,8 +98,8 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 @objc open class QwikHttp : NSObject {
     
     /***** REQUEST VARIABLES ******/
-    fileprivate var urlString : String!
-    fileprivate var httpMethod : HttpRequestMethod!
+    public var urlString : String!
+    public var httpMethod : HttpRequestMethod!
     fileprivate var headers : [String : String]!
     fileprivate var params : [String : AnyObject]!
     fileprivate var body: Data?
@@ -269,7 +269,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     //add a list of headers
     @objc open func addHeaders(_ headers: [String: String]!) -> QwikHttp
     {
-        self.headers = combinedDictionary(self.headers as [String : AnyObject]?, with: headers as [String : AnyObject]!) as! [String : String]
+        self.headers = combinedDictionary(self.headers as [String : AnyObject]?, with: headers as [String : AnyObject]?) as! [String : String]
         return self
     }
     
@@ -676,7 +676,7 @@ private class HttpRequestPooler
         {
             requestParams.wasIntercepted = true
             
-            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
             {
                 print("QwikHttp: Request being intercepted")
             }
@@ -827,6 +827,11 @@ private class HttpRequestPooler
                     
                     let error = NSError(domain: "QwikHttp", code: httpResponse.statusCode, userInfo: responseDict )
                     requestParams.responseError = error
+                    
+                    if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+                    {
+                        requestParams.printDebugInfo()
+                    }
                 }
                 
                 if let interceptor = QwikHttpConfig.responseInterceptor
@@ -837,9 +842,10 @@ private class HttpRequestPooler
                 //see if we are configured to use an interceptor and if so, check it to see if we should use it
                 if let interceptor = QwikHttpConfig.responseInterceptor , !requestParams.wasIntercepted &&  interceptor.shouldInterceptResponse(httpResponse) && !requestParams.avoidResponseInterceptor
                 {
-                    if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+                    if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
                     {
                         print("QwikHttp: Response being intercepted")
+                        requestParams.printDebugInfo()
                     }
                     
                     //call the interceptor and return. The interceptor will call our handler.
@@ -852,19 +858,14 @@ private class HttpRequestPooler
                 //in order to be considered successful the response must be in the 200's
                 if httpResponse.statusCode / 100 != 2 && error == nil
                 {
-                    if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
-                    {
-                        requestParams.printDebugInfo()
-                    }
-                    
                     handler(responseData, urlResponse, requestParams.responseError)
                     return
                 }
-            }
-            
-            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
-            {
-                requestParams.printDebugInfo()
+                
+                if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
+                {
+                    requestParams.printDebugInfo()
+                }
             }
             
             handler(responseData, urlResponse, error as NSError?)
