@@ -75,10 +75,8 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     open static var standardHeaders : [String : String]! = [:]
     open static var loggingLevel : QwikHttpLoggingLevel = .errors
     
-    //    @objc public static var responseInterceptorObjc: QwikHttpObjcResponseInterceptor? = nil
-    //    @objc public static var requestInterceptorObjc: QwikHttpObjcRequestInterceptor? = nil
-    
     open static var defaultResponseThread : ResponseThread = .main
+    open static var urlSession : URLSession = URLSession.shared
     
     //ensure timeout > 0
     open class func setDefaultTimeOut(_ timeout: Double!)
@@ -781,7 +779,7 @@ private class HttpRequestPooler
         }
         
         //send our request and do a bunch of common stuff before calling our response handler
-        URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (responseData, urlResponse, error) -> Void in
+        QwikHttpConfig.urlSession.dataTask(with: request as URLRequest, completionHandler: { (responseData, urlResponse, error) -> Void in
             
             if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
             {

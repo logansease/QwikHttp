@@ -40,11 +40,15 @@ import QwikHttp
     //show and hide indicators using swift spinner
     @objc open func showIndicator(_ title: String!)
     {
-        QwikLoadingIndicator.shared().show(withTitle: title)
+        Thread.mainThread {
+            QwikLoadingIndicator.shared().show(withTitle: title)
+        }
     }
     @objc open func hideIndicator()
     {
-        QwikLoadingIndicator.shared().hide()
+        Thread.mainThread {
+            QwikLoadingIndicator.shared().hide()
+        }
     }
     
     public func shouldInterceptRequest(_ request: QwikHttp!) -> Bool
