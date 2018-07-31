@@ -377,6 +377,19 @@ QwikHttpConfig.defaultCachePolicy = .ReloadIgnoringLocalCacheData
 QwikHttpConfig.setDefaultResponseThread(.Background)
 ```
 
+### Custom Url Session
+
+Customize the URL Session to provide your own URL Session Delegate. This is useful to handle the delegate's URLSession:didReceiveChallenge method. If not specified UrlSession.shared will be used.
+
+```
+QwikHttpConfig.urlSession = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+
+public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+
+    completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
+}
+```
+
 ## Objective C
 
 QwikHttp is compatible with objective-c by importing its objective-c class file. The objective c version of QwikHttp supports most of what the Swift version supports, except for Generics.
