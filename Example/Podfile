@@ -4,9 +4,4 @@ platform :ios, '11.0'
 target 'QwikHttp_Example' do
   pod 'QwikHttp', :path => '../'
   pod 'SeaseAssist'
-  target 'QwikHttp_Tests' do
-    inherit! :search_paths
-
-    
-  end
 end
