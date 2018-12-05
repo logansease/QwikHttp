@@ -64,22 +64,22 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 //a class to store default values and configuration for quikHttp
 @objc public class QwikHttpConfig : NSObject
 {
-    public fileprivate(set) static var defaultTimeOut = 40 as Double
-    public static var defaultCachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
-    public static var defaultParameterType = ParameterType.json
-    public static var defaultLoadingTitle : String? = nil
-    public static var loadingIndicatorDelegate: QwikHttpLoadingIndicatorDelegate? = nil
+    fileprivate static var defaultTimeOut = 40 as Double
+    @objc public static var defaultCachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
+    @objc public static var defaultParameterType = ParameterType.json
+    @objc public static var defaultLoadingTitle : String? = nil
+    @objc public static var loadingIndicatorDelegate: QwikHttpLoadingIndicatorDelegate? = nil
     
-    public static var responseInterceptor: QwikHttpResponseInterceptor? = nil
-    public static var requestInterceptor: QwikHttpRequestInterceptor? = nil
-    public static var standardHeaders : [String : String]! = [:]
-    public static var loggingLevel : QwikHttpLoggingLevel = .errors
+    @objc public static var responseInterceptor: QwikHttpResponseInterceptor? = nil
+    @objc public static var requestInterceptor: QwikHttpRequestInterceptor? = nil
+    @objc public static var standardHeaders : [String : String]! = [:]
+    @objc public static var loggingLevel : QwikHttpLoggingLevel = .errors
     
-    public static var defaultResponseThread : ResponseThread = .main
-    public static var urlSession : URLSession = URLSession.shared
+    @objc public static var defaultResponseThread : ResponseThread = .main
+    @objc public static var urlSession : URLSession = URLSession.shared
     
     //ensure timeout > 0
-    public class func setDefaultTimeOut(_ timeout: Double!)
+    @objc public class func setDefaultTimeOut(_ timeout: Double)
     {
         if(timeout > 0)
         {
@@ -96,8 +96,8 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 @objc open class QwikHttp : NSObject {
     
     /***** REQUEST VARIABLES ******/
-    public var urlString : String!
-    public var httpMethod : HttpRequestMethod!
+    @objc public var urlString : String!
+    @objc public var httpMethod : HttpRequestMethod
     fileprivate var headers : [String : String]!
     fileprivate var params : [String : AnyObject]!
     fileprivate var body: Data?
@@ -108,12 +108,12 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     fileprivate var avoidStandardHeaders : Bool = false
     
     //response variables
-    open var responseError : NSError?
-    open var responseData : Data?
-    open var response: URLResponse?
-    open var responseString : NSString?
-    open var wasIntercepted = false
-    open var responseStatusCode : Int = 0
+    @objc public var responseError : NSError?
+    @objc public var responseData : Data?
+    @objc public var response: URLResponse?
+    @objc public var responseString : NSString?
+    @objc public var wasIntercepted = false
+    @objc public var responseStatusCode : Int = 0
     
     
     //class params
