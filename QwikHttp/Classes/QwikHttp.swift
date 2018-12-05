@@ -64,22 +64,22 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 //a class to store default values and configuration for quikHttp
 @objc public class QwikHttpConfig : NSObject
 {
-    open fileprivate(set) static var defaultTimeOut = 40 as Double
-    open static var defaultCachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
-    open static var defaultParameterType = ParameterType.json
-    open static var defaultLoadingTitle : String? = nil
-    open static var loadingIndicatorDelegate: QwikHttpLoadingIndicatorDelegate? = nil
+    public fileprivate(set) static var defaultTimeOut = 40 as Double
+    public static var defaultCachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
+    public static var defaultParameterType = ParameterType.json
+    public static var defaultLoadingTitle : String? = nil
+    public static var loadingIndicatorDelegate: QwikHttpLoadingIndicatorDelegate? = nil
     
-    open static var responseInterceptor: QwikHttpResponseInterceptor? = nil
-    open static var requestInterceptor: QwikHttpRequestInterceptor? = nil
-    open static var standardHeaders : [String : String]! = [:]
-    open static var loggingLevel : QwikHttpLoggingLevel = .errors
+    public static var responseInterceptor: QwikHttpResponseInterceptor? = nil
+    public static var requestInterceptor: QwikHttpRequestInterceptor? = nil
+    public static var standardHeaders : [String : String]! = [:]
+    public static var loggingLevel : QwikHttpLoggingLevel = .errors
     
-    open static var defaultResponseThread : ResponseThread = .main
-    open static var urlSession : URLSession = URLSession.shared
+    public static var defaultResponseThread : ResponseThread = .main
+    public static var urlSession : URLSession = URLSession.shared
     
     //ensure timeout > 0
-    open class func setDefaultTimeOut(_ timeout: Double!)
+    public class func setDefaultTimeOut(_ timeout: Double!)
     {
         if(timeout > 0)
         {
@@ -145,7 +145,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     /**** ADD / SET VARIABLES. ALL RETURN SELF TO ENCOURAGE SINGLE LINE BUILDER TYPE SYNTAX *****/
     
     //add a parameter to the request
-    @objc open func addParam(_ key : String!, value: String?) -> QwikHttp
+    @objc public func addParam(_ key : String!, value: String?) -> QwikHttp
     {
         if let v = value
         {
@@ -156,7 +156,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //add a header
-    @objc open func addHeader(_ key : String!, value: String?) -> QwikHttp
+    @objc public func addHeader(_ key : String!, value: String?) -> QwikHttp
     {
         if let v = value
         {
@@ -166,14 +166,14 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //set a title to the loading indicator. Set to nil for no indicator
-    @objc open func setLoadingTitle(_ title: String?) -> QwikHttp
+    @objc public func setLoadingTitle(_ title: String?) -> QwikHttp
     {
         self.loadingTitle = title
         return self
     }
     
     //add a single optional URL parameter
-    @objc open func addUrlParam(_ key: String!, value: String?) -> QwikHttp
+    @objc public func addUrlParam(_ key: String!, value: String?) -> QwikHttp
     {
         guard let param = value else
         {
@@ -196,7 +196,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     
     //add an array of URL parameters
-    @objc open func addUrlParams(_ params: [String: String]!) -> QwikHttp
+    @objc public func addUrlParams(_ params: [String: String]!) -> QwikHttp
     {
         //start our URL Parameters
         if let _ = urlString.range(of: "?")
@@ -211,7 +211,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         return self
     }
     
-    @objc open func removeUrlParam(_ key: String!)
+    @objc public func removeUrlParam(_ key: String!)
     {
         //get our query items from the url
         if #available(OSX 10.10, *)
@@ -232,7 +232,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //set a quikJson into the request. Will serialize to json and set the content type.
-    @objc open func setObject(_ object: QwikJson?)  -> QwikHttp
+    @objc public func setObject(_ object: QwikJson?)  -> QwikHttp
     {
         if let qwikJson = object,  let params = qwikJson.toDictionary() as? [String : AnyObject]
         {
@@ -243,7 +243,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //set an array of objects to the request body serialized as json objects.
-    open func setObjects<Q : QwikJson>(_ objects: [Q]?, toModelClass modelClass: Q.Type)  -> QwikHttp
+    public func setObjects<Q : QwikJson>(_ objects: [Q]?, toModelClass modelClass: Q.Type)  -> QwikHttp
     {
         if let array = objects, let params = QwikJson.jsonArray(from: array, of: modelClass )
         {
@@ -258,28 +258,28 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //add an list of parameters
-    @objc open func addParams(_ params: [String: AnyObject]!) -> QwikHttp
+    @objc public func addParams(_ params: [String: AnyObject]!) -> QwikHttp
     {
         self.params = combinedDictionary(self.params, with: params)
         return self
     }
     
     //add a list of headers
-    @objc open func addHeaders(_ headers: [String: String]!) -> QwikHttp
+    @objc public func addHeaders(_ headers: [String: String]!) -> QwikHttp
     {
-        self.headers = combinedDictionary(self.headers as [String : AnyObject]?, with: headers as [String : AnyObject]?) as! [String : String]
+        self.headers = combinedDictionary(self.headers as [String : AnyObject]?, with: headers as [String : AnyObject]?) as? [String : String]
         return self
     }
     
     //set the body directly
-    @objc open func setBody(_ body : Data!) -> QwikHttp
+    @objc public func setBody(_ body : Data!) -> QwikHttp
     {
         self.body = body
         return self;
     }
     
     //get the body as a string for debugging purposes, very useful for displaying the json after the request is sent
-    @objc open func getBody() -> String?
+    @objc public func getBody() -> String?
     {
         guard let data = self.body else
         {
@@ -289,33 +289,33 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //set the parameter type
-    @objc open func setParameterType(_ parameterType : ParameterType) -> QwikHttp
+    @objc public func setParameterType(_ parameterType : ParameterType) -> QwikHttp
     {
         self.parameterType = parameterType
         return self;
     }
     
     //set the cache policy
-    @objc open func setCachePolicy(_ policy: URLRequest.CachePolicy) -> QwikHttp
+    @objc public func setCachePolicy(_ policy: URLRequest.CachePolicy) -> QwikHttp
     {
         cachePolicy = policy
         return self
     }
     
     //do not add standard headers if this is set to true
-    @objc open func setAvoidStandardHeaders(_ avoid: Bool) -> QwikHttp
+    @objc public func setAvoidStandardHeaders(_ avoid: Bool) -> QwikHttp
     {
         self.avoidStandardHeaders = avoid
         return self
     }
     
     //set the request time out
-    @objc open func setTimeOut(_ timeOut: Double) -> QwikHttp
+    @objc public func setTimeOut(_ timeOut: Double) -> QwikHttp
     {
         self.timeOut = timeOut
         return self
     }
-    @objc open func setResponseThread(_ responseThread: ResponseThread) -> QwikHttp
+    @objc public func setResponseThread(_ responseThread: ResponseThread) -> QwikHttp
     {
         self.responseThread = responseThread
         return self
@@ -324,7 +324,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     /********* RESPONSE HANDLERS / SENDING METHODS *************/
     
     //get an an object of a generic type back
-    open func getResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping (T?, NSError?, QwikHttp) -> Void)
+    public func getResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping (T?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -363,7 +363,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //get an array of a generic type back
-    open func getArrayResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping ([T]?, NSError?, QwikHttp) -> Void)
+    public func getArrayResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping ([T]?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -401,7 +401,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //Send the request with a simple boolean handler, which is optional
-    @objc open func send( _ handler: QBooleanCompletionHandler? = nil)
+    @objc public func send( _ handler: QBooleanCompletionHandler? = nil)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -425,7 +425,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     //a helper method to duck the response interceptor. Can be useful for cases like logout which
     //could lead to infinite recursion
-    @objc open func setAvoidResponseInterceptor(_ avoid : Bool)  -> QwikHttp!
+    @objc public func setAvoidResponseInterceptor(_ avoid : Bool)  -> QwikHttp!
     {
         self.avoidResponseInterceptor = true
         return self
@@ -433,20 +433,20 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     //a helper method to duck the request interceptor. Can be useful for cases like token refresh which
     //could lead to infinite recursion
-    @objc open func setAvoidRequestInterceptor(_ avoid : Bool)  -> QwikHttp!
+    @objc public func setAvoidRequestInterceptor(_ avoid : Bool)  -> QwikHttp!
     {
         self.avoidRequestInterceptor = true
         return self
     }
     
     //this method is primarily used for the response interceptor as any easy way to restart the request
-    @objc open func resend(_ handler: @escaping (Data?,URLResponse?, NSError? ) -> Void)
+    @objc public func resend(_ handler: @escaping (Data?,URLResponse?, NSError? ) -> Void)
     {
         HttpRequestPooler.sendRequest(self, handler: handler)
     }
     
     //reset our completion handlers and response data
-    @objc open func reset()
+    @objc public func reset()
     {
         self.response = nil
         self.responseString = nil
@@ -520,12 +520,12 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         }
     }
     
-    @objc open func printDebugInfo(excludeResponse : Bool = false)
+    @objc public func printDebugInfo(excludeResponse : Bool = false)
     {
         print(debugInfo(excludeResponse: excludeResponse))
     }
     
-    @objc open func debugInfo(excludeResponse : Bool = false) -> String
+    @objc public func debugInfo(excludeResponse : Bool = false) -> String
     {
         var log = "----- QwikHttp Request -----\n"
         log = log + self.requestDescription()
@@ -556,7 +556,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         return log
     }
     
-    @objc open func requestDescription() -> String
+    @objc public func requestDescription() -> String
     {
         return String(format: "%@ to %@\n", HttpRequestPooler.paramTypeToString(self.httpMethod), self.urlString)
     }
@@ -564,7 +564,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 
 extension QwikHttp
 {
-    @objc open func getStringResponse(_ handler :  @escaping (String?, NSError?, QwikHttp) -> Void)
+    @objc public func getStringResponse(_ handler :  @escaping (String?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -586,7 +586,7 @@ extension QwikHttp
         }
     }
     
-    @objc open func getDataResponse(_ handler :  @escaping (Data?, NSError?, QwikHttp) -> Void)
+    @objc public func getDataResponse(_ handler :  @escaping (Data?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -596,7 +596,7 @@ extension QwikHttp
         }
     }
     
-    @objc open func getDictionaryResponse(_ handler :  @escaping (NSDictionary?, NSError?, QwikHttp) -> Void)
+    @objc public func getDictionaryResponse(_ handler :  @escaping (NSDictionary?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -618,7 +618,7 @@ extension QwikHttp
         }
     }
     
-    @objc open func getArrayOfDictionariesResponse(_ handler :  @escaping ([NSDictionary]?, NSError?, QwikHttp) -> Void)
+    @objc public func getArrayOfDictionariesResponse(_ handler :  @escaping ([NSDictionary]?, NSError?, QwikHttp) -> Void)
     {
         HttpRequestPooler.sendRequest(self) { (data, response, error) -> Void in
             
@@ -778,6 +778,7 @@ private class HttpRequestPooler
             print("QwikHttp: Starting Request Send")
         }
         
+        
         //send our request and do a bunch of common stuff before calling our response handler
         QwikHttpConfig.urlSession.dataTask(with: request as URLRequest, completionHandler: { (responseData, urlResponse, error) -> Void in
             
@@ -871,7 +872,7 @@ private class HttpRequestPooler
     }
     
     //convert our enum to a string used for the request
-    open class func paramTypeToString(_ type: HttpRequestMethod) -> String!
+    public class func paramTypeToString(_ type: HttpRequestMethod) -> String!
     {
         switch(type)
         {
