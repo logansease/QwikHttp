@@ -560,7 +560,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         }
         
         log = log + "BODY:\n"
-        if let body = self.getBody()
+        if let body = self.getBody(filterLogs: filterLogs)
         {
             log = log + String(format: "%@\n", body)
         }
