@@ -288,7 +288,14 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
             return nil
         }
         
-        return String(data: data, encoding: .utf8)
+        var result = String(data: data, encoding: .utf8)
+        
+        if filterLogs && QwikHttpConfig.filterWords.count > 0
+        {
+            result = result?.filtered(sensitiveWords: QwikHttpConfig.filterWords)
+        }
+        
+        return result
     }
     
     //set the parameter type
@@ -525,7 +532,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     @objc public func printDebugInfo(excludeResponse : Bool = false, filterLogs : Bool = QwikHttpConfig.filterLogs)
     {
-        print(debugInfo(excludeResponse: excludeResponse))
+        print(debugInfo(excludeResponse: excludeResponse, filterLogs: filterLogs))
     }
     
     @objc public func debugInfo(excludeResponse : Bool = false, filterLogs : Bool = QwikHttpConfig.filterLogs) -> String
@@ -546,30 +553,16 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
             
             if filtered
             {
-                log = log + String(format: "%@: {FILTERED}\n", key)
+                log = log + String(format: "%@: [FILTERED]\n", key)
             } else {
                 log = log + String(format: "%@: %@\n", key, value)
             }
         }
         
-        log = log + "PARAMS:\n"
-        for (key, value) in self.params
+        log = log + "BODY:\n"
+        if let body = self.getBody()
         {
-            var filtered = false
-            if filterLogs && QwikHttpConfig.filterWords.count > 0
-            {
-                if QwikHttpConfig.filterWords.contains(key)
-                {
-                    filtered = true
-                }
-            }
-            
-            if filtered
-            {
-                log = log + String(format: "%@: {FILTERED}\n", key)
-            } else {
-                log = log + String(format: "%@: %@\n", key, value.description ?? "" )
-            }
+            log = log + String(format: "%@\n", body)
         }
         
         if excludeResponse == false
@@ -937,5 +930,27 @@ private class HttpRequestPooler
 
 
 
-
-
+extension String
+{
+    func filtered(sensitiveWords: [String]) -> String
+    {
+        var filterSearchRegex = ""
+        for word in sensitiveWords
+        {
+            filterSearchRegex.append(word)
+            if word != sensitiveWords.last
+            {
+                filterSearchRegex.append("|")
+            }
+        }
+        
+        let regexExpression = String(format: "\"(%@)\" *: *[^,}]*", filterSearchRegex)
+        if let regex = try? NSRegularExpression(pattern: regexExpression, options: .caseInsensitive)
+        {
+            //let matches = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length))
+            return regex.stringByReplacingMatches(in: self, options: [], range: NSRange(location: 0, length: self.count), withTemplate: "$1: [FILTERED]")
+        }
+        
+        return self
+    }
+}
