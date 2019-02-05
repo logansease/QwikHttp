@@ -78,7 +78,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     @objc public static var defaultResponseThread : ResponseThread = .main
     @objc public static var urlSession : URLSession = URLSession.shared
     @objc public static var filterLogs : Bool = false
-    @objc public static var filterWords : [String] = ["password", "Authorization", "secret"]
+    @objc public static var filterWords : [String] = ["password", "Authorization", "secret", "token"]
     
     //ensure timeout > 0
     @objc public class func setDefaultTimeOut(_ timeout: Double)
@@ -570,7 +570,12 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
             log = log + String(format: "RESPONSE: %@\n", String(self.responseStatusCode))
             if let responseData = self.responseData, let responseString = String(data: responseData, encoding: .utf8)
             {
-                log = log + responseString + "\n"
+                var loggedResponse = responseString
+                if filterLogs && QwikHttpConfig.filterWords.count > 0
+                {
+                    loggedResponse = loggedResponse.filtered(sensitiveWords: QwikHttpConfig.filterWords)
+                }
+                log = log + loggedResponse + "\n"
             }
             if let error = responseError
             {
