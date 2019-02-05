@@ -33,7 +33,9 @@ class ViewController: UIViewController {
         if(i == 0)
         {
             //call a get to the itunes search api and find our top overall paid apps on the US Store.
-            QwikHttp(url: "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/sf=143441/limit=10/json", httpMethod: HttpRequestMethod.get).getResponse(NSDictionary.self,  { (result, error, request) -> Void in
+            QwikHttp(url: "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/sf=143441/limit=10/json",
+                     httpMethod: HttpRequestMethod.get)
+                .getResponse(NSDictionary.self,  { (result, error, request) -> Void in
                 
                 request.printDebugInfo(excludeResponse: true)
                 
@@ -58,7 +60,11 @@ class ViewController: UIViewController {
             r.name = String(format: "Rest Test %i", arc4random() % 1000)
             
             //create a new restaurant
-            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .post).setLoadingTitle("Creating").setObject(r).addUrlParams(["format" : "json"]).getResponse(Restaurant.self, { (results, error, request) -> Void in
+            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .post)
+                .setLoadingTitle("Creating")
+                .setObject(r)
+                .addUrlParams(["format" : "json"])
+                .getResponse(Restaurant.self, { (results, error, request) -> Void in
                 
                 //get the restaurant from the response
                 if let restaurant = results, let name = restaurant.name
@@ -76,7 +82,9 @@ class ViewController: UIViewController {
         else if (i == 2)
         {
             //get an array of restaurants
-            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .get).addUrlParams(["format" : "json"]).getArrayResponse(Restaurant.self, { (results, error, request) -> Void in
+            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .get)
+                .addUrlParams(["format" : "json"])
+                .getArrayResponse(Restaurant.self, { (results, error, request) -> Void in
                 
                 //display the restaurant count
                 if let resultsArray = results
@@ -94,16 +102,36 @@ class ViewController: UIViewController {
         {
             //call a get with a specific restaurant. This is an example of the basic boolean result handler
             //no response info is available, but you can quickly determine if the response was successful or not.
-            QwikHttp("https://resttest2016.herokuapp.com/restaurants/1", httpMethod: .get).addUrlParams(["format" : "json"]).send({ (success) -> Void in
+            QwikHttp("https://resttest2016.herokuapp.com/restaurants/1", httpMethod: .get)
+                .addUrlParams(["format" : "json"]).send({ (success) -> Void in
                 
                 if success
                 {
-                    UIAlertController.showAlert(withTitle: "Load Successful", andMessage:"", from: self)
+                    UIAlertController.showAlert(withTitle: "Load Successful", andMessage:"Good work. You're awesome.", from: self)
                 }
                 else
                 {
                     UIAlertController.showAlert(withTitle: "Failure", andMessage: String(format: "Load error"), from: self)
                 }
+            })
+        }
+        
+        else if (i == 4)
+        {
+            let r = Restaurant()
+            r.name = String(format: "Rest Test %i", arc4random() % 1000)
+            r.secret = "HIDE THIS PLEASE"
+            
+            //create a new restaurant
+            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .post)
+                .setLoadingTitle("Creating")
+                .addHeader("Authorization", value: "Bearer TEST")
+                .setObject(r)
+                .addUrlParams(["format" : "json"])
+                .getResponse(Restaurant.self, { (results, error, request) -> Void in
+                    
+                    UIAlertController.showAlert(withTitle: "Filtered Request Sent", andMessage: request.debugInfo(excludeResponse: true, filterLogs: true), from: self)
+                    
             })
             
             //reset our request counter

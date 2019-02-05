@@ -77,6 +77,8 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     
     @objc public static var defaultResponseThread : ResponseThread = .main
     @objc public static var urlSession : URLSession = URLSession.shared
+    @objc public static var filterLogs : Bool = false
+    @objc public static var filterWords : [String] = ["password", "Authorization", "secret"]
     
     //ensure timeout > 0
     @objc public class func setDefaultTimeOut(_ timeout: Double)
@@ -279,12 +281,13 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     }
     
     //get the body as a string for debugging purposes, very useful for displaying the json after the request is sent
-    @objc public func getBody() -> String?
+    @objc public func getBody(filterLogs : Bool = QwikHttpConfig.filterLogs) -> String?
     {
         guard let data = self.body else
         {
             return nil
         }
+        
         return String(data: data, encoding: .utf8)
     }
     
@@ -520,25 +523,53 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
         }
     }
     
-    @objc public func printDebugInfo(excludeResponse : Bool = false)
+    @objc public func printDebugInfo(excludeResponse : Bool = false, filterLogs : Bool = QwikHttpConfig.filterLogs)
     {
         print(debugInfo(excludeResponse: excludeResponse))
     }
     
-    @objc public func debugInfo(excludeResponse : Bool = false) -> String
+    @objc public func debugInfo(excludeResponse : Bool = false, filterLogs : Bool = QwikHttpConfig.filterLogs) -> String
     {
         var log = "----- QwikHttp Request -----\n"
         log = log + self.requestDescription()
         log = log + "HEADERS:\n"
         for (key, value) in self.headers
         {
-            log = log + String(format: "%@: %@\n", key, value)
+            var filtered = false
+            if filterLogs && QwikHttpConfig.filterWords.count > 0
+            {
+                if QwikHttpConfig.filterWords.contains(key)
+                {
+                    filtered = true
+                }
+            }
+            
+            if filtered
+            {
+                log = log + String(format: "%@: {FILTERED}\n", key)
+            } else {
+                log = log + String(format: "%@: %@\n", key, value)
+            }
         }
         
-        log = log + "BODY:\n"
-        if let body = self.getBody()
+        log = log + "PARAMS:\n"
+        for (key, value) in self.params
         {
-            log = log + String(format: "%@\n", body)
+            var filtered = false
+            if filterLogs && QwikHttpConfig.filterWords.count > 0
+            {
+                if QwikHttpConfig.filterWords.contains(key)
+                {
+                    filtered = true
+                }
+            }
+            
+            if filtered
+            {
+                log = log + String(format: "%@: {FILTERED}\n", key)
+            } else {
+                log = log + String(format: "%@: %@\n", key, value.description ?? "" )
+            }
         }
         
         if excludeResponse == false
@@ -553,6 +584,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
                 log = log + String(format: "ERROR: %@\n",error.debugDescription)
             }
         }
+        
         return log
     }
     
