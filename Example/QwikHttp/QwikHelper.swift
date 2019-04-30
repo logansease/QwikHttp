@@ -14,7 +14,7 @@ import QwikHttp
 @objc open class QwikHelper : NSObject,  QwikHttpLoadingIndicatorDelegate, QwikHttpResponseInterceptor, QwikHttpRequestInterceptor
 {
     //standard singleton method stuff
-    open class func shared() -> QwikHelper {
+    @objc open class func shared() -> QwikHelper {
         struct Singleton {
             static let instance = QwikHelper()
         }
@@ -28,13 +28,12 @@ import QwikHttp
         QwikHttpConfig.defaultParameterType = .json
         QwikHttpConfig.defaultLoadingTitle = "Loading"
         QwikHttpConfig.defaultCachePolicy = .reloadIgnoringLocalCacheData
+        QwikHttpConfig.loggingLevel = .debug
         
         //set our loading indicator and response interceptor. This isn't required, but done just for test
         //and example
         QwikHttpConfig.loadingIndicatorDelegate = self
         QwikHttpConfig.responseInterceptor = self
-        
-        //send our first request
     }
     
     //show and hide indicators using swift spinner

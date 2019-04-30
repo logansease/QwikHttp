@@ -133,6 +133,26 @@ class ViewController: UIViewController {
                     UIAlertController.showAlert(withTitle: "Filtered Request Sent", andMessage: request.debugInfo(excludeResponse: true, filterLogs: true), from: self)
                     
             })
+        }
+        
+        else if (i == 5)
+        {
+            //get an array of restaurants
+            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .get)
+                .addUrlParams(["format" : "json"])
+                .setRequestSender(UrlSessionRequestSender(urlSession: URLSession.shared))
+                .getArrayResponse(Restaurant.self, { (results, error, request) -> Void in
+                    
+                    //display the restaurant count
+                    if let resultsArray = results
+                    {
+                        UIAlertController.showAlert(withTitle: "Success", andMessage: String(format: "We Found %li",resultsArray.count), from: self)
+                    }
+                    else
+                    {
+                        UIAlertController.showAlert(withTitle: "Failure", andMessage: String(format: "Load error"), from: self)
+                    }
+            })
             
             //reset our request counter
             i = -1;

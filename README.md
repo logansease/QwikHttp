@@ -390,6 +390,40 @@ public func urlSession(_ session: URLSession, didReceive challenge: URLAuthentic
 }
 ```
 
+You can set per request by creating a new request sender with your custom URL session. 
+```
+QwikHttp("https://api.com", httpMethod: .get)
+    .setRequestSender(UrlSessionRequestSender(urlSession: URLSession.shared))
+    .send()
+```
+
+### Custom Request Senders
+
+By default, requests are sent with the UrlSessionRequestSender and the shared URL Session, but you may create new classes that 
+implement the QwikHttpRequestSender protocol to send request with another mechanism like UrlConnection, or to mock the calls.
+
+```
+// this is our protocol definition
+@objc public protocol QwikHttpRequestSender {
+    @objc func sendRequest(_ request: URLRequest, handler: @escaping (Data?, URLResponse?, Error?) -> Void)
+}
+
+// create your new request sender class
+class MockRequestSender: QwikHttpRequestSender {
+    public func sendRequest(_ request: URLRequest, handler: @escaping (Data?, URLResponse?, Error?) -> Void)
+    {
+        let mockResult = "Mock. Yeah!".data(using: .utf8)
+        handler(mockResult, nil, nil)
+    }
+}
+
+// pass your request sender during request creation
+QwikHttp("https://api.com", httpMethod: .get)
+    .setRequestSender(MockRequestSender())
+    .send()
+
+```
+
 ## Objective C
 
 QwikHttp is compatible with objective-c by importing its objective-c class file. The objective c version of QwikHttp supports most of what the Swift version supports, except for Generics.
