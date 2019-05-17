@@ -13,7 +13,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
 
 /****** REQUEST TYPES *******/
 @objc public enum HttpRequestMethod : Int {
-    case get = 0, post, put, delete, patch
+    case get = 0, post, put, delete, patch, head
     
     public var description: String
     {
@@ -28,6 +28,8 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
             return "DELETE"
         case .patch:
             return "PATCH"
+        case .head:
+            return "HEAD"
         }
     }
 }
