@@ -695,11 +695,14 @@ extension QwikHttp
                 //try to parse the result into an error dictionary of json, since some apis return this way
                 //if that doesn't happen then we'll just return a generic user info dictionary
                 var responseDict  = ["Error": "Error Response Code" as AnyObject]
-                if let responseString = requestParams.responseString
+                if let responseString = requestParams.responseString, responseString.description.count > 0
                 {
                     if let errorDict = NSDictionary.fromJsonString(responseString as String) as? [String : AnyObject]
                     {
                         responseDict = errorDict
+                    }
+                    else {
+                        responseDict["Error"] = responseString
                     }
                 }
                 
