@@ -650,6 +650,7 @@ extension QwikHttp
     //this method is primarily used for the response interceptor as any easy way to restart the request
     @objc public func resend(_ handler: @escaping (Data?,URLResponse?, NSError? ) -> Void)
     {
+        self.reset()
         HttpRequestPooler.sendRequest(self, handler: handler)
     }
     
