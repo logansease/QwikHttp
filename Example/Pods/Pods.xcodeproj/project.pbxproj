@@ -10,7 +10,7 @@
 		0074D22CF8187E1D81612109D82CDF33 /* UIViewController+Presentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F4E8083E31C3AC87DFAA0541F2FB9FC /* UIViewController+Presentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		00E751782278813D0025E4D7 /* QwikHttpRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E751772278813D0025E4D7 /* QwikHttpRequestSender.swift */; };
 		01A96A41B07DBF5314625915F2D2F719 /* QwikJson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7A21A7E4D4CE52D919A038BF5416E84 /* QwikJson.framework */; };
-		026552EA11200A1658EA0B6CBE2C03C4 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33247E366E581DAC3C2E960C9F9E6D47 /* Serializable.swift */; };
+		026552EA11200A1658EA0B6CBE2C03C4 /* QwikCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33247E366E581DAC3C2E960C9F9E6D47 /* QwikCodable.swift */; };
 		0402C208884819DF5DE66DAE889B9202 /* NSString+Validation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2225B21E3B0BE9BDC869A88950D32C2D /* NSString+Validation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05AD379B90B8C34F544764F342685319 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4906BA8737152C66E3B46673E825FB /* UIView+Animation.m */; };
 		05B37D6D070F71EE37989252CAE614B0 /* UIDevice+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = F86AF47010F1DDE800BBD1B0BF81980E /* UIDevice+Keychain.m */; };
@@ -247,7 +247,7 @@
 		2EE054053AABAECEEDE76B1C4CDF4BE7 /* UIImage+Helpers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Helpers.h"; path = "Pod/Classes/UIImage+Helpers.h"; sourceTree = "<group>"; };
 		311F4529CEFC376634DA259F00A96AC0 /* RoundedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RoundedView.m; path = Pod/Classes/RoundedView.m; sourceTree = "<group>"; };
 		31933FD60678E83DDFF6338305DDE702 /* UIImage+Blur.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Blur.m"; path = "Pod/Classes/UIImage+Blur.m"; sourceTree = "<group>"; };
-		33247E366E581DAC3C2E960C9F9E6D47 /* Serializable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Serializable.swift; path = QwikHttp/Classes/Serializable.swift; sourceTree = "<group>"; };
+		33247E366E581DAC3C2E960C9F9E6D47 /* QwikCodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QwikCodable.swift; path = QwikHttp/Classes/QwikCodable.swift; sourceTree = "<group>"; };
 		342C4E4B50042510506508A61D4926CB /* QwikHttp.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = QwikHttp.xcconfig; sourceTree = "<group>"; };
 		34BFB906BED03DE8272DAB79CD335741 /* UIView+AnimateShow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+AnimateShow.h"; path = "Pod/Classes/UIView+AnimateShow.h"; sourceTree = "<group>"; };
 		35D66F28B8ECC1586961770F68F4B3A2 /* UIDevice+Version.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+Version.m"; path = "Pod/Classes/UIDevice+Version.m"; sourceTree = "<group>"; };
@@ -502,7 +502,7 @@
 				00E751772278813D0025E4D7 /* QwikHttpRequestSender.swift */,
 				6474971FC0DA41901F51A4F72796502D /* QwikDataConversion.swift */,
 				8FEA4CB3A715311FBCD348B9F88E7821 /* QwikHttp.swift */,
-				33247E366E581DAC3C2E960C9F9E6D47 /* Serializable.swift */,
+				33247E366E581DAC3C2E960C9F9E6D47 /* QwikCodable.swift */,
 				4523C0D507445D1558FBF964254B2F12 /* Pod */,
 				B52E290FB777B48C971AE89170DD6853 /* Support Files */,
 			);
@@ -1020,7 +1020,7 @@
 				CCD35B07B4B4B776F99B862B8BA6C737 /* QwikDataConversion.swift in Sources */,
 				D35861FF0AD2F5280DD808EBB306E524 /* QwikHttp-dummy.m in Sources */,
 				116EFEC518E148AE76213E77EA1DCCE7 /* QwikHttp.swift in Sources */,
-				026552EA11200A1658EA0B6CBE2C03C4 /* Serializable.swift in Sources */,
+				026552EA11200A1658EA0B6CBE2C03C4 /* QwikCodable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -68,7 +68,7 @@ The following Generic Types are supported by default. New types can be added by 
 - NSNumber
 - NSData
 - Arrays: These are supported via using the type of the array contents and calling the array completion handler as described below. Types supporting Arrays by default are Strings, Dictionaries and QwikJson Objects
-- Codable: Swifts new JSON encoding protocol, Codable is supported with QwikHttp. To use the codable type, your objects should implement the QwikHttp.Serializable protocol, which is an extension of Codable.
+- Codable: Swifts new JSON encoding protocol, Codable is supported with QwikHttp. To use the codable type, your objects should implement the QwikHttp.QwikCodable protocol, which is an extension of Codable.
 - For complex types, extend QwikJson to easily convert between dictionaries and complex objects and arrays ( see more below)
 
 

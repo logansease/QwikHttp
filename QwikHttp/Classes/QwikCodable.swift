@@ -1,6 +1,5 @@
 //
-//  Serializable.swift
-//  BlockstackCoreApi
+//  QwikCodable.swift
 //
 //  Created by lsease on 7/13/17.
 //  This is a protocol that extends Codable and adds simple serialization
@@ -9,7 +8,7 @@
 import Foundation
 
 //MARK: Serialization Helpers
-protocol Serializable : Codable, QwikDataConversion {
+public protocol QwikCodable : Codable, QwikDataConversion {
     func serialize() -> Data?
     static func deserialize(from data : Data?) -> Self?
     static func deserializeArray(from data : Data?) -> [Self]?
@@ -18,7 +17,7 @@ protocol Serializable : Codable, QwikDataConversion {
     static func arrayFromDictionary(_ dictionary : [[AnyHashable : Any]]) -> [Self]?
 }
 
-extension Serializable
+extension QwikCodable
 {
     public static func fromData<T>(_ data : Data?) -> T?{
         return deserialize(from: data) as? T
@@ -30,7 +29,7 @@ extension Serializable
     }
 }
 
-extension Serializable
+extension QwikCodable
 {
     public func toDictionary() -> [AnyHashable : Any]?
     {
