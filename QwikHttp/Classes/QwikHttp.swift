@@ -442,7 +442,7 @@ extension QwikHttp
         {
             //convert parameters to json string and form and set to body
             do {
-                let data = try JSONSerialization.data(withJSONObject: requestParams.params, options: JSONSerialization.WritingOptions.prettyPrinted)
+                let data = try JSONSerialization.data(withJSONObject: requestParams.params as Any, options: JSONSerialization.WritingOptions.prettyPrinted)
                 request.httpBody = data
                 
                 //set our body so we can view it later for debug purposes
