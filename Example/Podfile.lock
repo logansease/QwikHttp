@@ -1,5 +1,5 @@
 PODS:
-  - QwikHttp (1.8.3):
+  - QwikHttp (1.12):
     - QwikJson
   - QwikJson (1.0.16)
   - SeaseAssist (0.0.30)
@@ -9,7 +9,7 @@ DEPENDENCIES:
   - SeaseAssist
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - QwikJson
     - SeaseAssist
 
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  QwikHttp: d6a2eb296dce7ababd3ec62b3f200e007fd69a2a
+  QwikHttp: a5f8ef550a54b75f380dd031f4119961f2e39c70
   QwikJson: 6d794f1d426d20ff6a963dd883bd4001feb44874
   SeaseAssist: 0332dca3f207526efc0760faf3f607c66d3b9234
 
 PODFILE CHECKSUM: e045754d06e9b3a9e6be790e569da5f5eb3fd819
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.11.2

@@ -11,7 +11,7 @@ What separates QwikHttp from other Networking Libraries is its:
 - response interceptors to provide a method to handle unauthorized responses and token refreshing with ease.
 - Swift concurrency support
 
-QwikHttp is written in Swift 5 and works great with Swift. It even works great (without generics) with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
+QwikHttp is written in Swift 5 and works great with Swift. It even works great (without generics) with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 9+, tvOS, WatchOS 2 and OSX 10.9+. 
 For a Swift 2 and objective-c compatible version, please see version 1.6.11
 
 ## Usage
@@ -338,6 +338,7 @@ You may also set a default logging level on QwikHttpConfig so that debug informa
 - debug: which will do the above plus print debug, low level info during the request process
 - none: turn off logging
 
+This can be set at a global level via QwikHttpConfig, and override at the request level with QwikHttp.setLoggingLevel()
 
 ### Retain it and re run it
 since QwikHttp is an object, you can hold on to it, pass it around and run it again!

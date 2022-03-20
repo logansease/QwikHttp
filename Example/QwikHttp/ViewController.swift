@@ -88,7 +88,7 @@ class ViewController: UIViewController {
                     let response = await request.getArrayResponse(Restaurant.self)
                     switch response {
                     case .success(let result):
-                        UIAlertController.showAlert(withTitle: "Success", andMessage: String(format: "We Found %li with async, response code: %li",result.count, request.responseStatusCode), from: self)
+                        UIAlertController.showAlert(withTitle: "Success", andMessage: "We Found \(result.count) with async, response code: \(request.responseStatusCode)", from: self)
                     case .failure(let error):
                         UIAlertController.showAlert(withTitle: "Failure", andMessage: String(format: "Load error \(error)"), from: self)
                     }

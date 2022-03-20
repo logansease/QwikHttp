@@ -135,6 +135,7 @@ public typealias QBooleanCompletionHandler = (_ success: Bool) -> Void
     @objc public var responseString : NSString?
     @objc public var wasIntercepted = false
     @objc public var responseStatusCode : Int = 0
+    @objc public var loggingLevel : QwikHttpLoggingLevel = QwikHttpConfig.loggingLevel
     
     //class params
     fileprivate var timeOut : Double!
@@ -252,6 +253,14 @@ extension QwikHttp
                 }
             }
         }
+    }
+
+    
+    //set a quikJson into the request. Will serialize to json and set the content type.
+    public func setLoggingLevel(_ level: QwikHttpLoggingLevel)  -> QwikHttp
+    {
+        self.loggingLevel = level
+        return self
     }
     
     //set a quikJson into the request. Will serialize to json and set the content type.
@@ -497,7 +506,7 @@ extension QwikHttp
                 {
                     self.determineThread({ () -> () in
                         
-                        if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+                        if self.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
                         {
                             self.printDebugInfo()
                         }
@@ -549,7 +558,7 @@ extension QwikHttp
                     //error if we could not deserialize
                     self.determineThread({ () -> () in
                         
-                        if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+                        if self.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
                         {
                             self.printDebugInfo()
                         }
@@ -737,7 +746,7 @@ extension QwikHttp
                 let error = NSError(domain: "QwikHttp", code: httpResponse.statusCode, userInfo: responseDict )
                 requestParams.responseError = error
                 
-                if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+                if self.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
                 {
                     requestParams.printDebugInfo()
                 }
@@ -899,7 +908,7 @@ private class HttpRequestPooler
         //if the request has already been sent, then return
         guard requestParams.responseData == nil && requestParams.responseError == nil else
         {
-            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+            if requestParams.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
             {
                 print("QwikHttp: Request has already been sent. Returning.")
             }
@@ -908,7 +917,7 @@ private class HttpRequestPooler
             return
         }
         
-        if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+        if requestParams.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
         {
             print("QwikHttp: Preparing Request For Send")
         }
@@ -918,7 +927,7 @@ private class HttpRequestPooler
             request = try requestParams.getConfiguredRequest()
         }
         catch {
-            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
+            if requestParams.loggingLevel.rawValue >= QwikHttpLoggingLevel.errors.rawValue
             {
                 requestParams.printDebugInfo()
             }
@@ -934,7 +943,7 @@ private class HttpRequestPooler
         {
             requestParams.wasIntercepted = true
             
-            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
+            if requestParams.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
             {
                 print("QwikHttp: Request being intercepted")
             }
@@ -951,7 +960,7 @@ private class HttpRequestPooler
             showingSpinner = true
         }
         
-        if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+        if requestParams.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
         {
             print("QwikHttp: Starting Request Send")
         }
@@ -959,7 +968,7 @@ private class HttpRequestPooler
         //send our request and do a bunch of common stuff before calling our response handler
         requestParams.requestSender.sendRequest(request) { (responseData, urlResponse, error) in
             
-            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
+            if requestParams.loggingLevel.rawValue >= QwikHttpLoggingLevel.debug.rawValue
             {
                 print("QwikHttp: Request Returned")
             }
@@ -984,7 +993,7 @@ private class HttpRequestPooler
                 //see if we are configured to use an interceptor and if so, check it to see if we should use it
                 if let interceptor = QwikHttpConfig.responseInterceptor , !requestParams.wasIntercepted &&  interceptor.shouldInterceptResponse(httpResponse) && !requestParams.avoidResponseInterceptor
                 {
-                    if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
+                    if requestParams.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
                     {
                         print("QwikHttp: Response being intercepted")
                         requestParams.printDebugInfo()
@@ -1005,7 +1014,7 @@ private class HttpRequestPooler
                 }
             }
             
-            if QwikHttpConfig.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
+            if requestParams.loggingLevel.rawValue >= QwikHttpLoggingLevel.requests.rawValue
             {
                 requestParams.printDebugInfo()
             }
