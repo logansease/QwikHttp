@@ -518,7 +518,7 @@ extension QwikHttp
         }
     }
     
-    @available(iOS 13.0.0, *)
+    @available(iOS 13.0.0, watchOS 6.0.0, tvOS 13.0, macOS 10.15, *)
     public func getResponse<T : QwikDataConversion>(_ type: T.Type) async -> Result<T, Error> {
         return await withCheckedContinuation({ continuation in
             self.getResponse(type) { result, error, request in
@@ -570,7 +570,7 @@ extension QwikHttp
         }
     }
     
-    @available(iOS 13.0.0, *)
+    @available(iOS 13.0.0, watchOS 6.0.0, tvOS 13.0, macOS 10.15, *)
     public func getArrayResponse<T : QwikDataConversion>(_ type: T.Type) async -> Result<[T], Error> {
         return await withCheckedContinuation({ continuation in
             self.getArrayResponse(type) { result, error, request in
