@@ -9,8 +9,9 @@ What separates QwikHttp from other Networking Libraries is its:
 - broad multi-platform support
 - simple, yet robust loading indicator support
 - response interceptors to provide a method to handle unauthorized responses and token refreshing with ease.
+- Swift concurrency support
 
-QwikHttp is written in Swift 3 and works great with Swift. It even works great (without generics) with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
+QwikHttp is written in Swift 5 and works great with Swift. It even works great (without generics) with objective-c. It utilizes the most recent ios networking API, NSURLSession. QwikHttp is compatible with iOS 8+, tvOS, WatchOS 2 and OSX 10.9+. 
 For a Swift 2 and objective-c compatible version, please see version 1.6.11
 
 ## Usage
@@ -21,6 +22,20 @@ Here are some example of how easy it is to use QwikHttp.
 
 ```swift
 QwikHttp("https://api.com", httpMethod: .get).send()
+```
+
+### Swift Concurrency Support
+```
+    Task {
+        let request = QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .get).addUrlParams(["format" : "json"])
+        let response = await request.getArrayResponse(Restaurant.self)
+        switch response {
+        case .success(let result):
+            UIAlertController.showAlert(withTitle: "Success", andMessage: String(format: "We Found %li with async, response code: %li",result.count, request.responseStatusCode), from: self)
+        case .failure(let error):
+            UIAlertController.showAlert(withTitle: "Failure", andMessage: String(format: "Load error \(error)"), from: self)
+        }
+    }
 ```
 
 ### Parameters and Headers

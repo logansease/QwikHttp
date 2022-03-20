@@ -509,6 +509,20 @@ extension QwikHttp
         }
     }
     
+    @available(iOS 13.0.0, *)
+    public func getResponse<T : QwikDataConversion>(_ type: T.Type) async -> Result<T, Error> {
+        return await withCheckedContinuation({ continuation in
+            self.getResponse(type) { result, error, request in
+                if let result = result {
+                    continuation.resume(returning: .success(result))
+                }
+                else if let error = error {
+                    continuation.resume(returning: .failure(error))
+                }
+            }
+        })
+    }
+    
     //get an array of a generic type back
     public func getArrayResponse<T : QwikDataConversion>(_ type: T.Type, _ handler :  @escaping ([T]?, NSError?, QwikHttp) -> Void)
     {
@@ -545,6 +559,20 @@ extension QwikHttp
                 }
             }
         }
+    }
+    
+    @available(iOS 13.0.0, *)
+    public func getArrayResponse<T : QwikDataConversion>(_ type: T.Type) async -> Result<[T], Error> {
+        return await withCheckedContinuation({ continuation in
+            self.getArrayResponse(type) { result, error, request in
+                if let result = result {
+                    continuation.resume(returning: .success(result))
+                }
+                else if let error = error {
+                    continuation.resume(returning: .failure(error))
+                }
+            }
+        })
     }
     
     //Send the request with a simple boolean handler, which is optional

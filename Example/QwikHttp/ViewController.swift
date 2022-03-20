@@ -81,21 +81,22 @@ class ViewController: UIViewController {
             
         else if (i == 2)
         {
-            //get an array of restaurants
-            QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .get)
-                .addUrlParams(["format" : "json"])
-                .getArrayResponse(Restaurant.self, { (results, error, request) -> Void in
-                
-                //display the restaurant count
-                if let resultsArray = results
-                {
-                    UIAlertController.showAlert(withTitle: "Success", andMessage: String(format: "We Found %li",resultsArray.count), from: self)
+            if #available(iOS 13, *) {
+                //get an array of restaurants with async
+                Task {
+                    let request = QwikHttp("https://resttest2016.herokuapp.com/restaurants", httpMethod: .get).addUrlParams(["format" : "json"])
+                    let response = await request.getArrayResponse(Restaurant.self)
+                    switch response {
+                    case .success(let result):
+                        UIAlertController.showAlert(withTitle: "Success", andMessage: String(format: "We Found %li with async, response code: %li",result.count, request.responseStatusCode), from: self)
+                    case .failure(let error):
+                        UIAlertController.showAlert(withTitle: "Failure", andMessage: String(format: "Load error \(error)"), from: self)
+                    }
                 }
-                else
-                {
-                    UIAlertController.showAlert(withTitle: "Failure", andMessage: String(format: "Load error"), from: self)
-                }
-            })
+            } else {
+                i += 1
+                sendRequest()
+            }
         }
         
         else if (i == 3)
