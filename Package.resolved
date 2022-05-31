@@ -5,7 +5,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/logansease/QwikJson",
       "state" : {
-        "revision" : "47b46dc4ebf2f8b7e0d4b00c4ef6918ce5f1fa8d",
+        "revision" : "a45dd68a8c0e1ac217bdf556455439cc689829e4",
         "version" : "1.1.0"
       }
     }
