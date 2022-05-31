@@ -3,7 +3,7 @@
     {
       "identity" : "qwikjson",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/jurvis/QwikJson",
+      "location" : "https://github.com/lsease/QwikJson",
       "state" : {
         "revision" : "47b46dc4ebf2f8b7e0d4b00c4ef6918ce5f1fa8d",
         "version" : "1.1.0"
