@@ -13,7 +13,7 @@ let package = Package(
             targets: ["QwikHttp"])
     ],
     dependencies: [
-        .package(url: "https://github.com/jurvis/QwikJson", from: "1.1.0"),
+        .package(url: "https://github.com/logansease/QwikJson", from: "1.1.0"),
     ],
     targets: [
         .target(
