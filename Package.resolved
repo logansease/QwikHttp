@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "qwikjson",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/logansease/QwikJson",
+      "state" : {
+        "revision" : "a45dd68a8c0e1ac217bdf556455439cc689829e4",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 2
+}
